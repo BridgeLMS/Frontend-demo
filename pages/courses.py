@@ -4,7 +4,12 @@ from typing import Dict, Any
 
 def courses() -> None:
     """Create the courses page."""
-
+    ui.add_css('''
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+    body {
+        font-family: 'Poppins', sans-serif;
+    }
+    ''')
     all_courses = [
         {'title': 'Introduction to Programming', 'desc': 'Learn the basics of programming with Python.',
             'image_url': 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=800&q=80', 'category': 'Web Development', 'status': 'Active', 'tutor': 'Dr. Reed'},
@@ -24,6 +29,7 @@ def courses() -> None:
         'category': 'All',
         'status': 'All',
         'tutor': 'All',
+        'sort': 'Relevance',
     }
 
     def update_courses():
@@ -48,27 +54,27 @@ def courses() -> None:
                         ui.label(course['title']).classes('text-lg font-bold')
                         ui.label(course['desc']).classes('text-gray-600 mt-2')
 
-    with ui.row().classes('w-full items-center'):
+    with ui.column().classes('w-full max-w-7xl mx-auto py-8 space-y-16'):
         # Hero Section
         with ui.row().classes(
-            'w-full h-[70vh] bg-cover bg-center flex items-center justify-center text-center text-white'
+            'w-full h-[50vh] bg-cover bg-center flex items-center justify-center text-center text-white'
         ).style(
             'background-image: url("https://images.unsplash.com/photo-1584697964193-40b0a4f1c95e?auto=format&fit=crop&w=1600&q=80")'
         ):
-            with ui.row().classes('items-center bg-black bg-opacity-40 p-8 rounded-xl'):
-                ui.label('Explore Courses').classes('text-5xl font-extrabold')
+            with ui.column().classes('items-center justify-center bg-black bg-opacity-40 p-8 rounded-xl max-w-4xl'):
+                ui.label('Explore Courses').classes('text-5xl font-extrabold mb-4')
                 ui.label(
                     'Find the perfect course to enhance your skills and knowledge. '
                     'Browse our catalog or use filters to narrow your search.'
-                ).classes('text-xl mt-4 text-center max-w-3xl')
-                with ui.row().classes('mt-8 w-full max-w-lg'):
+                ).classes('text-xl text-center max-w-3xl mb-8')
+                with ui.row().classes('w-full max-w-lg justify-center'):
                     ui.input(placeholder='Search for courses, e.g. "Web Development"').classes(
-                        'w-full')
+                        'flex-1')
                     ui.button(
-                        'Search', on_click=lambda: ui.notify('Searching...'))
+                        'Search', on_click=lambda: ui.notify('Searching...')).classes('ml-2')
 
         # Featured Courses Section
-        with ui.column().classes('w-full items-center my-16 px-4'):
+        with ui.column().classes('w-full items-center px-4'):
             ui.label('Featured Courses').classes(
                 'text-4xl font-bold text-gray-800')
             with ui.grid(columns=3).classes('w-full max-w-6xl gap-8 mt-8'):
@@ -99,24 +105,22 @@ def courses() -> None:
                             ui.label(desc).classes('text-gray-600 mt-2')
 
         # All Courses Section
-        with ui.row().classes('w-full max-w-7xl my-16 px-4 gap-8'):
+        with ui.row().classes('w-full px-4 gap-8'):
             # Filters
-            with ui.column().classes('w-1/4'):
-                ui.label('Filter Courses').classes('text-3xl font-bold')
-                with ui.column().classes('mt-4 space-y-4'):
-                    ui.select(['All', 'Web Development', 'Data Science', 'Marketing', 'Business', 'Design'],
-                              label='Category', on_change=lambda e: filters.update({'category': e.value}) or update_courses())
-                    ui.select(['All', 'Active', 'Completed'], label='Status', on_change=lambda e: filters.update(
-                        {'status': e.value}) or update_courses())
-                    ui.select(['All', 'Dr. Reed', 'Ms. Rossi'], label='Tutor', on_change=lambda e: filters.update(
-                        {'tutor': e.value}) or update_courses())
+            with ui.column().classes('w-1/4 justify-center'):
+                with ui.card().classes('p-6 shadow-lg rounded-xl bg-white'):
+                    ui.label('Filter Courses').classes('text-3xl font-bold mb-4')
+                    with ui.column().classes('space-y-4'):
+                        ui.select(['All', 'Web Development', 'Data Science', 'Marketing', 'Business', 'Design'],
+                                  label='Category', on_change=lambda e: filters.update({'category': e.value}) or update_courses()).classes('w-full')
+                        ui.select(['All', 'Active', 'Completed'], label='Status', on_change=lambda e: filters.update(
+                            {'status': e.value}) or update_courses()).classes('w-full')
+                        ui.select(['All', 'Dr. Reed', 'Ms. Rossi'], label='Tutor', on_change=lambda e: filters.update(
+                            {'tutor': e.value}) or update_courses()).classes('w-full')
+                        ui.select(['Relevance', 'Popularity', 'Newest'], label='Sort', on_change=lambda e: filters.update({'sort': e.value}) or update_courses()).classes('w-full')
 
             # Course Grid
             with ui.column().classes('w-3/4'):
-                with ui.row().classes('w-full justify-end'):
-                    ui.select(['Relevance', 'Popularity',
-                              'Newest'], label='Sort')
-
                 course_grid = ui.grid(columns=3).classes('w-full gap-8 mt-4')
                 update_courses()
 
@@ -127,5 +131,3 @@ def courses() -> None:
                     ui.button('1', on_click=lambda: ui.notify('1'))
                     ui.button('2', on_click=lambda: ui.notify('2'))
                     ui.button('3', on_click=lambda: ui.notify('3'))
-                    ui.button(icon='chevron_right',
-                              on_click=lambda: ui.notify('Next'))
