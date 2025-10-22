@@ -1,4 +1,4 @@
-from nicegui import ui
+from nicegui import ui, app
 from components.footer import footer
 from components.header import header
 from pages.home import home
@@ -42,7 +42,8 @@ def courses_page():
 
 @ui.page('/contact')
 def contact_page():
-    """Contact page layout."""
+    """Contact page 
+layout."""
     header()
     contact()
     footer()
@@ -66,4 +67,5 @@ def signup_page():
     signup()
 
 
+app.add_static_files('/assets', 'assets')
 ui.run()

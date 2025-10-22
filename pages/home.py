@@ -3,20 +3,15 @@ from nicegui import ui
 
 def home() -> None:
     """Create the home page."""
-    ui.add_css('''
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
-    body {
-        font-family: 'Poppins', sans-serif;
-    }
-    ''')
     with ui.column().classes('w-full items-center'):
         # Hero Section
         with ui.row().classes(
             'w-full h-screen bg-cover bg-center flex items-center justify-center'
         ).style(
-            'background-image: url("https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1600&q=80")'
+            'background-image: url("assets/Images/BridgeTeam.jpg")'
         ):
             with ui.column().classes('items-center text-white bg-black bg-opacity-40 p-8 rounded-xl'):
+                ui.label('Welcome to BridgeLMS!').classes('text-4xl font-bold').style('color: var(--text-titles)')
                 ui.label('Bridging Gaps, Building Futures').classes(
                     'text-5xl font-bold'
                 )
@@ -27,77 +22,95 @@ def home() -> None:
                     ui.button(
                         "I'm a Learner",
                         on_click=lambda: ui.navigate.to('/login'),
-                    ).classes('m-2')
+                    ).classes('m-2').style('background-color: var(--accent); color: white;')
                     ui.button(
                         "I'm a Tutor", on_click=lambda: ui.navigate.to('/login')
-                    ).classes('m-2')
+                    ).classes('m-2').style('background-color: var(--accent); color: white;')
 
-        # Explore Our Courses Section
+        # # Explore Our Courses Section
         with ui.column().classes('w-full items-center my-16'):
             ui.label('Explore Our Courses').classes('text-4xl font-bold')
             ui.label(
                 'Find the perfect course to advance your skills and knowledge.'
-            ).classes('text-lg mt-2 text-gray-600')
+            ).classes('text-lg mt-2').style('color: var(--text-titles)')
 
             with ui.row().classes('mt-8'):
-                ui.button('All Categories', on_click=lambda: ui.notify('All'))
-                ui.button('Web Design', on_click=lambda: ui.notify('Web Design'))
+                ui.button('All Categories', on_click=lambda: ui.notify('All')).style('background-color: var(--primary-brand); color: white;')
+                # ui.button('Web Design', on_click=lambda: ui.notify('Web Design'))
                 ui.button(
                     'Cybersecurity', on_click=lambda: ui.notify('Cybersecurity')
-                )
+                ).style('background-color: var(--primary-brand); color: white;')
                 ui.button(
                     'Web Development',
                     on_click=lambda: ui.notify('Web Development'),
-                )
+                ).style('background-color: var(--primary-brand); color: white;')
                 ui.button(
                     'Data Science', on_click=lambda: ui.notify('Data Science')
-                )
-                ui.button('Marketing', on_click=lambda: ui.notify('Marketing'))
+                ).style('background-color: var(--primary-brand); color: white;')
+                ui.button('Marketing', on_click=lambda: ui.notify('Marketing')).style('background-color: var(--primary-brand); color: white;')
 
-            with ui.grid(columns=3).classes('w-full max-w-5xl gap-8 mt-8'):
-                for title, desc, price in [
-                    (
-                        'Introduction to Web Design',
-                        'Learn the fundamentals of web design, including HTML, CSS, and responsive design principles.',
-                        '$49.99',
-                    ),
-                    (
-                        'Cybersecurity Essentials',
-                        'Protect systems and networks from digital attacks with this comprehensive cybersecurity course.',
-                        '$89.99',
-                    ),
-                    (
-                        'Full-Stack Web Development',
-                        'Master both front-end and back-end technologies to build complete web applications.',
-                        '$129.99',
-                    ),
-                ]:
-                    with ui.card().classes('text-left'):
-                        if title == 'Introduction to Web Design':
-                            image_url = 'https://images.unsplash.com/photo-1504639725590-7ea55b8b8c18?auto=format&fit=crop&w=800&q=80'
-                        elif title == 'Cybersecurity Essentials':
-                            image_url = 'https://images.unsplash.com/photo-1550751827-413370a9a671?auto=format&fit=crop&w=800&q=80'
-                        else:
-                            image_url = 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=800&q=80'
-                        ui.image(image_url).classes('w-full h-48 object-cover rounded-t-lg')
-                        with ui.card_section():
-                            ui.label(title).classes('text-xl font-bold')
-                            ui.label(desc).classes('text-gray-600 mt-2')
-                            with ui.row().classes(
-                                'w-full justify-between items-center mt-4'
-                            ):
-                                ui.label(price).classes(
-                                    'text-lg font-bold text-blue-600'
-                                )
-                                ui.link('Learn More', '#').classes(
-                                    'text-blue-600'
-                                )
+        #     with ui.grid(columns=3).classes('w-full max-w-5xl gap-8 mt-8'):
+        #         for title, desc, price in [
+        #             (
+        #                 'Introduction to Web Design',
+        #                 'Learn the fundamentals of web design, including HTML, CSS, and responsive design principles.',
+        #                 '₵49.99',
+        #             ),
+        #             (
+        #                 'Cybersecurity Essentials',
+        #                 'Protect systems and networks from digital attacks with this comprehensive cybersecurity course.',
+        #                 '₵89.99',
+        #             ),
+        #             (
+        #                 'Full-Stack Web Development',
+        #                 'Master both front-end and back-end technologies to build complete web applications.',
+        #                 '₵129.99',
+        #             ),
+        #         ]:
+            # with ui.grid(columns=3).classes('w-full max-w-5xl gap-8 mt-8'):
+            #     for title, desc, price in [
+            #         (
+            #             'Introduction to Web Design',
+            #             'Learn the fundamentals of web design, including HTML, CSS, and responsive design principles.',
+            #             '₵49.99',
+            #         ),
+            #         (
+            #             'Cybersecurity Essentials',
+            #             'Protect systems and networks from digital attacks with this comprehensive cybersecurity course.',
+            #             '₵89.99',
+            #         ),
+            #         (
+            #             'Full-Stack Web Development',
+            #             'Master both front-end and back-end technologies to build complete web applications.',
+            #             '₵129.99',
+            #         ),
+            #     ]:
+            #         with ui.card().classes('text-left').style('background-color: var(--card-surface-light);'):
+            #             if title == 'Introduction to Web Design':
+            #                 image_url = 'assets/Images/web_dev.jpg'
+            #             elif title == 'Cybersecurity Essentials':
+            #                 image_url = 'assets/Images/cyber_ess.jpg'
+            #             else:
+            #                 image_url = 'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=800&q=80'
+            #             ui.image(image_url).classes('w-full h-48 object-cover rounded-t-lg')
+            #             with ui.card_section():
+            #                 ui.label(title).classes('text-xl font-bold')
+            #                 ui.label(desc).classes('mt-2').style('color: var(--text-titles)')
+            #                 with ui.row().classes(
+            #                     'w-full justify-between items-center mt-4'
+            #                 ):
+            #                     ui.label(price).classes(
+            #                         'text-lg font-bold'
+            #                     ).style('color: var(--accent)')
+            #                     ui.link('Learn More', '#').style(
+            #                         'color: var(--accent)'
+            #                     )
         # Why BridgeLMS? Section
-        with ui.column().classes('w-full items-center my-16 bg-gray-100 p-16'):
+        with ui.column().classes('w-full items-center my-16 p-16').style('background-color: var(--background-light)'):
             ui.label('Why BridgeLMS?').classes('text-4xl font-bold')
             ui.label(
                 'BridgeLMS simplifies the learning process, offering a comprehensive suite of tools to enhance your educational journey.'
-            ).classes('text-lg mt-2 text-gray-600 text-center max-w-2xl')
+            ).classes('text-lg mt-2 text-center max-w-2xl').style('color: var(--text-titles)')
 
             with ui.grid(columns=4).classes('w-full max-w-5xl gap-8 mt-8'):
                 for icon, title, desc in [
@@ -122,10 +135,10 @@ def home() -> None:
                         'Track attendance with our innovative facial verification system.',
                     ),
                 ]:
-                    with ui.card().classes('items-center text-center'):
-                        ui.icon(icon).classes('text-5xl text-blue-600')
+                    with ui.card().classes('items-center text-center').style('background-color: var(--card-surface-light);'):
+                        ui.icon(icon).classes('text-5xl').style('color: var(--primary-brand)')
                         ui.label(title).classes('text-xl font-bold mt-4')
-                        ui.label(desc).classes('text-gray-600 mt-2')
+                        ui.label(desc).classes('mt-2').style('color: var(--text-titles)')
 
         # How BridgeLMS Works Section
         with ui.column().classes('w-full items-center my-16'):
@@ -150,14 +163,14 @@ def home() -> None:
                 ]:
                     with ui.row().classes('items-start'):
                         ui.label(number).classes(
-                            'text-4xl font-bold text-blue-600 mr-8'
-                        )
+                            'text-4xl font-bold mr-8'
+                        ).style('color: var(--primary-brand)')
                         with ui.column():
                             ui.label(title).classes('text-2xl font-bold')
-                            ui.label(desc).classes('text-gray-600 mt-2')
+                            ui.label(desc).classes('mt-2').style('color: var(--text-titles)')
 
         # Community & Trust Section
-        with ui.column().classes('w-full items-center my-16 bg-gray-100 p-16'):
+        with ui.column().classes('w-full items-center my-16 p-16').style('background-color: var(--background-light)'):
             ui.label('Community & Trust').classes('text-4xl font-bold')
             with ui.grid(columns=3).classes('w-full max-w-6xl gap-8 mt-8'):
                 for quote, author, role in [
@@ -196,7 +209,7 @@ def home() -> None:
             )
             ui.label(
                 'Join BridgeLMS today and unlock a world of educational opportunities.'
-            ).classes('text-lg mt-2 text-gray-600')
+            ).classes('text-lg mt-2').style('color: var(--text-titles)')
             ui.button(
                 'Get Started Now', on_click=lambda: ui.navigate.to('/login')
-            ).classes('mt-8')
+            ).classes('mt-8').style('background-color: var(--accent); color: white;')
