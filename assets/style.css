@@ -1,0 +1,19 @@
+:root {
+  --primary-brand: #26B5AE;
+  --primary-hover: #1AA49E;
+  --accent: #6C5CE7;
+  --success: #00C48C;
+  --text-titles: #0F172A;
+  --background-light: #F8FAFC;
+  --background-dark: #0F172A;
+  --card-surface-light: #FFFFFF;
+  --card-surface-dark: #1E293B;
+  --error: #EF4444;
+  --warning: #F59E0B;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--background-light);
+    color: var(--text-titles);
+}
