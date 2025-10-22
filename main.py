@@ -1,10 +1,8 @@
 from nicegui import ui
-
 from components.footer import footer
 from components.header import header
 from pages.home import home
 from pages.learner_dashboard import dashboard as learner_dashboard
-from pages.about import about
 from pages.courses import courses
 from pages.contact import contact
 from pages.login import login
@@ -23,17 +21,15 @@ def main():
 @ui.page('/dashboard')
 def dashboard_page():
     """Dashboard page layout."""
-    header()
     learner_dashboard()
-    footer()
 
 
-@ui.page('/about')
-def about_page():
-    """About page layout."""
-    header()
-    about()
-    footer()
+# @ui.page('/about')
+# def about_page():
+#     """About page layout."""
+#     header()
+#     about()
+#     footer()
 
 
 @ui.page('/courses')
