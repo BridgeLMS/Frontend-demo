@@ -7,31 +7,9 @@ def courses() -> None:
     ui.add_css('''
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
     body {
-        font-family: 'Montser', sans-serif;
+        font-family: 'Poppins', sans-serif;
     }
     ''')
-    with ui.column().classes('w-full items-center my-16'):
-            ui.label('Explore Our Courses').classes('text-4xl font-bold')
-            ui.label(
-                'Find the perfect course to advance your skills and knowledge.'
-            ).classes('text-lg mt-2').style('color: var(--text-titles)')
-
-            with ui.row().classes('mt-8'):
-                ui.button('All Categories', on_click=lambda: ui.notify('All')).style('background-color: var(--primary-brand); color: white;')
-                # ui.button('Web Design', on_click=lambda: ui.notify('Web Design'))
-                ui.button(
-                    'Cybersecurity', on_click=lambda: ui.notify('Cybersecurity')
-                ).style('background-color: var(--primary-brand); color: white;')
-                ui.button(
-                    'Web Development',
-                    on_click=lambda: ui.notify('Web Development'),
-                ).style('background-color: var(--primary-brand); color: white;')
-                ui.button(
-                    'Data Science', on_click=lambda: ui.notify('Data Science')
-                ).style('background-color: var(--primary-brand); color: white;')
-                ui.button('Marketing', on_click=lambda: ui.notify('Marketing')).style('background-color: var(--primary-brand); color: white;')
-
-
     all_courses = [
         {'title': 'Introduction to Programming', 'desc': 'Learn the basics of programming with Python.',
             'image_url': 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=800&q=80', 'category': 'Web Development', 'status': 'Active', 'tutor': 'Dr. Reed'},
@@ -86,8 +64,8 @@ def courses() -> None:
             with ui.column().classes('items-center justify-center bg-black bg-opacity-40 p-8 rounded-xl max-w-4xl'):
                 ui.label('Explore Courses').classes('text-5xl font-extrabold mb-4')
                 ui.label(
-                    # 'Find the perfect course to enhance your skills and knowledge. '
-                    # 'Browse our catalog or use filters to narrow your search.'
+                    'Find the perfect course to enhance your skills and knowledge. '
+                    'Browse our catalog or use filters to narrow your search.'
                 ).classes('text-xl text-center max-w-3xl mb-8')
                 with ui.row().classes('w-full max-w-lg justify-center'):
                     ui.input(placeholder='Search for courses, e.g. "Web Development"').classes(
