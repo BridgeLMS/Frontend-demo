@@ -4,7 +4,12 @@ from typing import Dict, Any
 
 def courses() -> None:
     """Create the courses page."""
-
+    ui.add_css('''
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+    body {
+        font-family: 'Poppins', sans-serif;
+    }
+    ''')
     all_courses = [
         {'title': 'Introduction to Programming', 'desc': 'Learn the basics of programming with Python.',
             'image_url': 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=800&q=80', 'category': 'Web Development', 'status': 'Active', 'tutor': 'Dr. Reed'},

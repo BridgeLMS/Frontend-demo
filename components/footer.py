@@ -9,9 +9,9 @@ def footer() -> None:
         ui.label('© 2023 BridgeLMS. All rights reserved.')
         with ui.row():
             # ui.link('About', '/about').classes('mx-2')
-            ui.link('Contact', '/contact').classes('mx-2')
-            ui.link('Privacy', '/privacy').classes('mx-2')
-            ui.link('Terms', '/terms').classes('mx-2')
+            ui.link('Contact', '/contact').classes('mx-2 no-underline')
+            ui.link('Privacy', '/privacy').classes('mx-2 no-underline')
+            ui.link('Terms', '/terms').classes('mx-2 no-underline')
         with ui.row():
             ui.icon('facebook').classes('mx-2')
             ui.icon('twitter').classes('mx-2')

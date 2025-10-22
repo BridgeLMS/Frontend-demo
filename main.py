@@ -57,9 +57,7 @@ def login_page():
 @ui.page('/tutor-dashboard')
 def tutor_dashboard_page():
     """Tutor dashboard page layout."""
-    header()
     tutor_dashboard()
-    footer()
 
 
 @ui.page('/signup')
