@@ -3,6 +3,12 @@ from nicegui import ui
 
 def home() -> None:
     """Create the home page."""
+    ui.add_css('''
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+    body {
+        font-family: 'Poppins', sans-serif;
+    }
+    ''')
     with ui.column().classes('w-full items-center'):
         # Hero Section
         with ui.row().classes(

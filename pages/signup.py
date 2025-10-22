@@ -9,7 +9,7 @@ def signup() -> None:
         ui.notify('Account created successfully!', color='positive')
         ui.navigate.to('/login')
 
-    with ui.column().classes('w-full h-screen flex items-center justify-center bg-gray-100'):
+    with ui.column().classes('w-full min-h-screen flex items-center justify-center bg-gray-100'):
         with ui.card().classes('w-full max-w-md p-8 rounded-lg shadow-lg'):
             with ui.column().classes('w-full items-center space-y-4'):
                 ui.label('Create an Account').classes('text-4xl font-bold text-gray-800')
@@ -29,6 +29,8 @@ def signup() -> None:
                     password=True,
                     password_toggle_button=True,
                 ).classes('w-full')
+                ui.input (label='Role', placeholder='Are you a Learner or Tutor?').classes('w-full')
+                ui.input (label='Bio', placeholder='Tell us about yourself').classes('w-full')
 
                 ui.button('Create Account', on_click=handle_signup).classes('w-full bg-blue-500 text-white')
 
