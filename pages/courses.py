@@ -7,9 +7,31 @@ def courses() -> None:
     ui.add_css('''
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
     body {
-        font-family: 'Poppins', sans-serif;
+        font-family: 'Montser', sans-serif;
     }
     ''')
+    with ui.column().classes('w-full items-center my-16'):
+            ui.label('Explore Our Courses').classes('text-4xl font-bold')
+            ui.label(
+                'Find the perfect course to advance your skills and knowledge.'
+            ).classes('text-lg mt-2').style('color: var(--text-titles)')
+
+            with ui.row().classes('mt-8'):
+                ui.button('All Categories', on_click=lambda: ui.notify('All')).style('background-color: var(--primary-brand); color: white;')
+                # ui.button('Web Design', on_click=lambda: ui.notify('Web Design'))
+                ui.button(
+                    'Cybersecurity', on_click=lambda: ui.notify('Cybersecurity')
+                ).style('background-color: var(--primary-brand); color: white;')
+                ui.button(
+                    'Web Development',
+                    on_click=lambda: ui.notify('Web Development'),
+                ).style('background-color: var(--primary-brand); color: white;')
+                ui.button(
+                    'Data Science', on_click=lambda: ui.notify('Data Science')
+                ).style('background-color: var(--primary-brand); color: white;')
+                ui.button('Marketing', on_click=lambda: ui.notify('Marketing')).style('background-color: var(--primary-brand); color: white;')
+
+
     all_courses = [
         {'title': 'Introduction to Programming', 'desc': 'Learn the basics of programming with Python.',
             'image_url': 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=800&q=80', 'category': 'Web Development', 'status': 'Active', 'tutor': 'Dr. Reed'},
