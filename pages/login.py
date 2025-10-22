@@ -1,4 +1,5 @@
 from nicegui import ui
+from utils.auth import api_login, api_signup, set_session
 
 # Mock user database
 USERS = {'user@example.com': 'password123', 'admin': 'adminpass'}
