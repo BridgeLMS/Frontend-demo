@@ -64,8 +64,8 @@ def courses() -> None:
             with ui.column().classes('items-center justify-center bg-black bg-opacity-40 p-8 rounded-xl max-w-4xl'):
                 ui.label('Explore Courses').classes('text-5xl font-extrabold mb-4')
                 ui.label(
-                    'Find the perfect course to enhance your skills and knowledge. '
-                    'Browse our catalog or use filters to narrow your search.'
+                    # 'Find the perfect course to enhance your skills and knowledge. '
+                    # 'Browse our catalog or use filters to narrow your search.'
                 ).classes('text-xl text-center max-w-3xl mb-8')
                 with ui.row().classes('w-full max-w-lg justify-center'):
                     ui.input(placeholder='Search for courses, e.g. "Web Development"').classes(
