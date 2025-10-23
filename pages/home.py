@@ -15,7 +15,7 @@ def home() -> None:
         ):
             
             
-            with ui.column().classes('items-center px-16 py-1 rounded-xl w-full max-w-3xl mx-auto mt-64').style("font-family: 'Montserrat', Times New Roman; background-color: #002a47;"):
+            with ui.column().classes('items-center px-16 py-1 rounded-xl w-full max-w-3xl mx-auto mt-64').style("font-family: 'Montserrat', Times New Roman; background: linear-gradient(to right, #a8c0ff, #3f2b96); color: white;"):
                 ui.label('Welcome to BridgeLMS!').classes('text-4xl font-bold text-white')
                 with ui.column().classes('items-center gap-0'):
                     ui.label('Bridging Gaps, Building Futures').classes(
