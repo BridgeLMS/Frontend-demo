@@ -19,4 +19,4 @@ def header() -> None:
             ui.button(
                 'Get Started', on_click=lambda: ui.navigate.to('/login')).classes(
                 'mx-2'
-            ).style('background-color: var(--accent); color: white;')
+            ).style('background-color: var(--accent); color: black;')

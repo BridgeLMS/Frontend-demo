@@ -1,7 +1,10 @@
 from nicegui import ui
+from components.header import header as app_header
+
 
 def tutor_dashboard() -> None:
     """Create the tutor dashboard page."""
+    app_header()
     ui.add_css('''
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
     :root {
@@ -20,7 +23,9 @@ def tutor_dashboard() -> None:
     }
     .container {
         width: 100%;
-        padding: 2rem;
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+        padding-right: 2rem;
     }
     .grid {
         display: grid;
@@ -57,37 +62,30 @@ def tutor_dashboard() -> None:
     }
     ''')
     with ui.column().classes('app'):
-        # Top bar
-        with ui.row().classes('topbar w-full items-center justify-between q-pa-md'):
-            ui.label('BridgeLMS').classes('text-2xl font-bold text-dark')
-            with ui.row().classes('items-center gap-4'):
-                ui.input(placeholder='Search...').props('dense outlined rounded').classes('w-64')
-                ui.button(icon='light_mode').props('flat round')
-                ui.button(icon='dark_mode').props('flat round')
-                ui.image('https://i.pravatar.cc/64?img=2').classes('w-10 h-10 rounded-full')
-
         # Main grid
         with ui.element('main').classes('container'):
             with ui.element('div').classes('grid'):
                 # ---------- LEFT SIDEBAR ----------
-                with ui.column().classes('sidebar space-y-2'):
-                    ui.label('MENU').classes('text-xs font-bold text-gray-500 uppercase tracking-wider px-4')
-                    ui.button('Dashboard', icon='dashboard').props('flat no-caps')
-                    ui.button('My Courses', icon='book').props('flat no-caps')
-                    ui.button('Students', icon='group').props('flat no-caps')
-                    ui.button('Messages', icon='mail').props('flat no-caps')
-                    ui.separator().classes('my-4')
-                    ui.label('SETTINGS').classes('text-xs font-bold text-gray-500 uppercase tracking-wider px-4')
-                    ui.button('Profile', icon='person').props('flat no-caps')
-                    ui.button('Logout', icon='logout').props('flat color=negative no-caps')
+                with ui.column().classes('sidebar flex flex-col justify-between'):
+                    with ui.column().classes('space-y-2 w-full'):
+                        ui.label('MENU').classes('text-xs font-bold text-gray-500 uppercase tracking-wider px-4 text-center')
+                        ui.button('Home', icon='home', on_click=lambda: ui.open('/')).props('flat no-caps').classes('w-full justify-start')
+                        ui.button('My Courses', icon='book', on_click=lambda: ui.open('/courses')).props('flat no-caps').classes('w-full justify-start')
+                        ui.button('Students', icon='group').props('flat no-caps').classes('w-full justify-start')
+                        ui.button('Messages', icon='mail').props('flat no-caps').classes('w-full justify-start')
+                    with ui.column().classes('space-y-2 w-full'):
+                        ui.separator().classes('my-4')
+                        ui.label('SETTINGS').classes('text-xs font-bold text-gray-500 uppercase tracking-wider px-4 text-center')
+                        ui.button('Profile', icon='person').props('flat no-caps').classes('w-full justify-start')
+                        ui.button('Logout', icon='logout').props('flat color=negative no-caps').classes('w-full justify-start')
 
                 # ---------- CENTER COLUMN ----------
-                with ui.column().classes('space-y-6'):
+                with ui.column().classes('space-y-6').style('padding-left: 2rem'):
                     # Header
                     with ui.row().classes('w-full justify-between items-center'):
                         with ui.column():
                             ui.label('Tutor Dashboard').classes('text-4xl font-bold text-gray-800')
-                            ui.label('Welcome back, Ethan! Here’s your summary.').classes('text-lg text-gray-600')
+                            ui.label('Welcome back, Prof Ellen! Here’s your summary for this semester.').classes('text-lg text-gray-600')
 
                     # Stats
                     with ui.row().classes('w-full gap-4'):
@@ -99,57 +97,53 @@ def tutor_dashboard() -> None:
                                         ui.label(value).classes('text-3xl font-bold')
                                     ui.icon(icon, size='lg').classes('text-brand')
 
-                    # My Courses
-                    with ui.card():
-                        ui.label('My Courses').classes('text-2xl font-bold text-gray-800 mb-4')
-                        with ui.column().classes('w-full space-y-4'):
-                            courses = [
-                                ('Digital Marketing Fundamentals', '124 Students', 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=80'),
-                                ('Advanced Spanish', '88 Students', 'https://images.unsplash.com/photo-1524678606370-a47625cb810c?auto=format&fit=crop&w=800&q=80'),
-                                ('Creative Writing Workshop', '95 Students', 'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=800&q=80'),
-                            ]
-                            for title, students, image_url in courses:
-                                with ui.row().classes('w-full items-center gap-4'):
-                                    ui.image(image_url).classes('w-24 h-16 rounded-lg object-cover')
-                                    with ui.column().classes('flex-1'):
-                                        ui.label(title).classes('font-bold')
-                                        ui.label(students).classes('text-gray-500 text-sm')
-                                    ui.button('Manage', icon='arrow_forward').props('flat round')
-
-                    # Management Tools & Recent Activity
-                    with ui.row().classes('w-full gap-6'):
-                        with ui.column().classes('w-1/2'):
-                            with ui.card():
-                                ui.label('Management Tools').classes('text-2xl font-bold text-gray-800 mb-4')
-                                with ui.column().classes('w-full space-y-4'):
-                                    tools = [
-                                        ('book', 'Manage Resources', 'Upload and organize course materials.'),
-                                        ('campaign', 'Post Announcements', 'Share updates with your students.'),
-                                        ('checklist', 'Track Attendance', 'Monitor student attendance and engagement.'),
-                                    ]
-                                    for icon, name, desc in tools:
-                                        with ui.row().classes('items-center gap-4'):
-                                            ui.icon(icon, size='md').classes('text-brand')
-                                            with ui.column():
-                                                ui.label(name).classes('font-bold')
-                                                ui.label(desc).classes('text-gray-500 text-sm')
-                        with ui.column().classes('w-1/2'):
-                            with ui.card():
-                                ui.label('Recent Activity').classes('text-2xl font-bold text-gray-800 mb-4')
-                                with ui.column().classes('w-full space-y-4'):
-                                    activities = [
-                                        ('Sophia Carter submitted a new assignment.', '2 hours ago'),
-                                        ('You posted a new announcement.', '1 day ago'),
-                                        ('New student enrolled in your course.', '3 days ago'),
-                                    ]
-                                    for desc, time in activities:
+                    # My Courses & Management Tools
+                    with ui.row().classes('w-full gap-6 items-stretch'):
+                        with ui.card().classes('flex-1'):
+                            ui.label('My Courses').classes('text-2xl font-bold text-gray-800 mb-4')
+                            with ui.column().classes('w-full space-y-4'):
+                                courses = [
+                                    ('Digital Marketing Fundamentals', '124 Students', 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=80'),
+                                    ('Advanced Spanish', '88 Students', 'https://images.unsplash.com/photo-1524678606370-a47625cb810c?auto=format&fit=crop&w=800&q=80'),
+                                    ('Creative Writing Workshop', '95 Students', 'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=800&q=80'),
+                                ]
+                                for title, students, image_url in courses:
+                                    with ui.row().classes('w-full items-center gap-4'):
+                                        ui.image(image_url).classes('w-24 h-16 rounded-lg object-cover')
+                                        with ui.column().classes('flex-1'):
+                                            ui.label(title).classes('font-bold')
+                                            ui.label(students).classes('text-gray-500 text-sm')
+                                        ui.button('Manage', icon='arrow_forward').props('flat round')
+                        with ui.card().classes('flex-1'):
+                            ui.label('Management Tools').classes('text-2xl font-bold text-gray-800 mb-4')
+                            with ui.column().classes('w-full space-y-4'):
+                                tools = [
+                                    ('book', 'Manage Resources', 'Upload and organize course materials.'),
+                                    ('campaign', 'Post Announcements', 'Share updates with your students.'),
+                                    ('checklist', 'Track Attendance', 'Monitor student attendance and engagement.'),
+                                ]
+                                for icon, name, desc in tools:
+                                    with ui.row().classes('items-center gap-4'):
+                                        ui.icon(icon, size='md').classes('text-brand')
                                         with ui.column():
-                                            ui.label(desc).classes('font-semibold')
-                                            ui.label(time).classes('text-sm text-gray-500')
-
-                    # Announcements Section
-                    with ui.card():
-                        ui.label('Post a New Announcement').classes('text-2xl font-bold text-gray-800 mb-4')
-                        ui.input(placeholder='Announcement Title').classes('w-full')
-                        ui.textarea(placeholder='Write your announcement...').classes('w-full')
-                        ui.button('Post Announcement', on_click=lambda: ui.notify('Announcement Posted!')).classes('w-full mt-4 bg-brand text-white')
+                                            ui.label(name).classes('font-bold')
+                                            ui.label(desc).classes('text-gray-500 text-sm')
+                    # Recent Activity & Announcements Section
+                    with ui.row().classes('w-full gap-6 items-stretch'):
+                        with ui.card().classes('flex-1'):
+                            ui.label('Recent Activity').classes('text-2xl font-bold text-gray-800 mb-4')
+                            with ui.column().classes('w-full space-y-4'):
+                                activities = [
+                                    ('Sophia Carter submitted a new assignment.', '2 hours ago'),
+                                    ('You posted a new announcement.', '1 day ago'),
+                                    ('New student enrolled in your course.', '3 days ago'),
+                                ]
+                                for desc, time in activities:
+                                    with ui.column():
+                                        ui.label(desc).classes('font-semibold')
+                                        ui.label(time).classes('text-sm text-gray-500')
+                        with ui.card().classes('flex-1'):
+                            ui.label('Post a New Announcement').classes('text-2xl font-bold text-gray-800 mb-4')
+                            ui.input(placeholder='Announcement Title').classes('w-full')
+                            ui.textarea(placeholder='Write your announcement...').classes('w-full')
+                            ui.button('Post Announcement', on_click=lambda: ui.notify('Announcement Posted!')).classes('w-full mt-4 bg-brand text-white')

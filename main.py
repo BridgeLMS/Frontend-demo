@@ -5,9 +5,11 @@ from pages.home import home
 from pages.learner_dashboard import dashboard as learner_dashboard
 from pages.courses import courses
 from pages.contact import contact
+from pages.calendar import calendar_page
 from pages.login import login
 from pages.tutor_dashboard import tutor_dashboard
 from pages.signup import signup
+# aboutfrom pages.about import 
 
 
 @ui.page('/')
@@ -24,12 +26,12 @@ def dashboard_page():
     learner_dashboard()
 
 
-# @ui.page('/about')
-# def about_page():
-#     """About page layout."""
-#     header()
-#     about()
-#     footer()
+@ui.page('/calendar')
+def show_calendar_page():
+    """Calendar page layout."""
+    header()
+    calendar_page()
+    footer()
 
 
 @ui.page('/courses')
@@ -65,6 +67,14 @@ def tutor_dashboard_page():
 def signup_page():
     """Sign up page layout."""
     signup()
+
+
+# @ui.page('/about')
+# def about_page():
+#     """About page layout."""
+#     header()
+#     about()
+#     footer()
 
 
 app.add_static_files('/assets', 'assets')
