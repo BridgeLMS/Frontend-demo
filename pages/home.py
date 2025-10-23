@@ -3,6 +3,9 @@ from nicegui import ui
 
 def home() -> None:
     """Create the home page."""
+    ui.add_css('''
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+    ''')
     with ui.column().classes('w-full items-center'):
         # Hero Section
         with ui.row().classes(
@@ -10,7 +13,9 @@ def home() -> None:
         ).style(
             'background-image: url("assets/Images/BridgeTeam.jpg")'
         ):
-            with ui.column().classes('items-center text-white bg-black bg-opacity-40 p-8 rounded-xl'):
+            
+            
+            with ui.column().classes('items-center text-white bg-black bg-opacity-30 p-6 rounded-xl mt-64 w-auto max-w-3xl mx-auto').style("font-family: 'Montserrat', sans-serif"):
                 ui.label('Welcome to BridgeLMS!').classes('text-4xl font-bold').style('color: var(--text-titles)')
                 ui.label('Bridging Gaps, Building Futures').classes(
                     'text-5xl font-bold'
@@ -19,35 +24,37 @@ def home() -> None:
                     'BridgeLMS is your all-in-one platform for seamless learning and teaching.'
                 ).classes('text-xl mt-4')
                 with ui.row().classes('mt-8'):
+                    
                     ui.button(
-                        "I'm a Learner",
+                        "I am a Learner",
                         on_click=lambda: ui.navigate.to('/login'),
                     ).classes('m-2').style('background-color: var(--accent); color: white;')
                     ui.button(
-                        "I'm a Tutor", on_click=lambda: ui.navigate.to('/login')
+                        "I am a Tutor", on_click=lambda: ui.navigate.to('/login')
                     ).classes('m-2').style('background-color: var(--accent); color: white;')
+                    
 
         # # Explore Our Courses Section
-        with ui.column().classes('w-full items-center my-16'):
-            ui.label('Explore Our Courses').classes('text-4xl font-bold')
-            ui.label(
-                'Find the perfect course to advance your skills and knowledge.'
-            ).classes('text-lg mt-2').style('color: var(--text-titles)')
+        # with ui.column().classes('w-full items-center my-16'):
+        #     ui.label('Explore Our Courses').classes('text-4xl font-bold')
+        #     ui.label(
+        #         'Find the perfect course to advance your skills and knowledge.'
+        #     ).classes('text-lg mt-2').style('color: var(--text-titles)')
 
-            with ui.row().classes('mt-8'):
-                ui.button('All Categories', on_click=lambda: ui.notify('All')).style('background-color: var(--primary-brand); color: white;')
-                # ui.button('Web Design', on_click=lambda: ui.notify('Web Design'))
-                ui.button(
-                    'Cybersecurity', on_click=lambda: ui.notify('Cybersecurity')
-                ).style('background-color: var(--primary-brand); color: white;')
-                ui.button(
-                    'Web Development',
-                    on_click=lambda: ui.notify('Web Development'),
-                ).style('background-color: var(--primary-brand); color: white;')
-                ui.button(
-                    'Data Science', on_click=lambda: ui.notify('Data Science')
-                ).style('background-color: var(--primary-brand); color: white;')
-                ui.button('Marketing', on_click=lambda: ui.notify('Marketing')).style('background-color: var(--primary-brand); color: white;')
+        #     with ui.row().classes('mt-8'):
+        #         ui.button('All Categories', on_click=lambda: ui.notify('All')).style('background-color: var(--primary-brand); color: white;')
+        #         # ui.button('Web Design', on_click=lambda: ui.notify('Web Design'))
+        #         ui.button(
+        #             'Cybersecurity', on_click=lambda: ui.notify('Cybersecurity')
+        #         ).style('background-color: var(--primary-brand); color: white;')
+        #         ui.button(
+        #             'Web Development',
+        #             on_click=lambda: ui.notify('Web Development'),
+        #         ).style('background-color: var(--primary-brand); color: white;')
+        #         ui.button(
+        #             'Data Science', on_click=lambda: ui.notify('Data Science')
+        #         ).style('background-color: var(--primary-brand); color: white;')
+        #         ui.button('Marketing', on_click=lambda: ui.notify('Marketing')).style('background-color: var(--primary-brand); color: white;')
 
         #     with ui.grid(columns=3).classes('w-full max-w-5xl gap-8 mt-8'):
         #         for title, desc, price in [
