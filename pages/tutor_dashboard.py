@@ -69,7 +69,7 @@ def tutor_dashboard() -> None:
                 with ui.column().classes('sidebar flex flex-col justify-between'):
                     with ui.column().classes('space-y-2 w-full'):
                         ui.label('MENU').classes('text-xs font-bold text-gray-500 uppercase tracking-wider px-4 text-center')
-                        ui.button('Home', icon='home', on_click=lambda: ui.open('/')).props('flat no-caps').classes('w-full justify-start')
+                        ui.button('Home', icon='home', on_click=lambda: ui.navigate.to('/')).props('flat no-caps').classes('w-full justify-start')
                         ui.button('My Courses', icon='book', on_click=lambda: ui.open('/courses')).props('flat no-caps').classes('w-full justify-start')
                         ui.button('Students', icon='group').props('flat no-caps').classes('w-full justify-start')
                         ui.button('Messages', icon='mail').props('flat no-caps').classes('w-full justify-start')
