@@ -10,6 +10,7 @@ def courses() -> None:
         font-family: 'Poppins', sans-serif;
     }
     ''')
+    
     all_courses = [
         {'title': 'Introduction to Programming', 'desc': 'Learn the basics of programming with Python.',
             'image_url': 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=800&q=80', 'category': 'Web Development', 'status': 'Active', 'tutor': 'Dr. Reed'},
@@ -34,48 +35,77 @@ def courses() -> None:
 
     def update_courses():
         course_grid.clear()
-        with course_grid:
-            filtered_courses = all_courses
-            if filters['category'] != 'All':
-                filtered_courses = [
-                    c for c in filtered_courses if c['category'] == filters['category']]
-            if filters['status'] != 'All':
-                filtered_courses = [
-                    c for c in filtered_courses if c['status'] == filters['status']]
-            if filters['tutor'] != 'All':
-                filtered_courses = [
-                    c for c in filtered_courses if c['tutor'] == filters['tutor']]
+        # with course_grid:
+        #     filtered_courses = all_courses
+        #     if filters['category'] != 'All':
+        #         filtered_courses = [
+        #             c for c in filtered_courses if c['category'] == filters['category']]
+        #     if filters['status'] != 'All':
+        #         filtered_courses = [
+        #             c for c in filtered_courses if c['status'] == filters['status']]
+        #     if filters['tutor'] != 'All':
+        #         filtered_courses = [
+        #             c for c in filtered_courses if c['tutor'] == filters['tutor']]
 
-            for course in filtered_courses:
-                with ui.card().classes('text-left transition hover:scale-105 hover:shadow-lg duration-300'):
-                    ui.image(course['image_url']).classes(
-                        'w-full h-48 object-cover rounded-t-lg')
-                    with ui.card_section():
-                        ui.label(course['title']).classes('text-lg font-bold')
-                        ui.label(course['desc']).classes('text-gray-600 mt-2')
+        #     for course in filtered_courses:
+        #         with ui.card().classes('text-left transition hover:scale-105 hover:shadow-lg duration-300'):
+        #             ui.image(course['image_url']).classes(
+        #                 'w-full h-48 object-cover rounded-t-lg')
+        #             with ui.card_section():
+        #                 ui.label(course['title']).classes('text-lg font-bold')
+        #                 ui.label(course['desc']).classes('text-gray-600 mt-2')
 
-    with ui.column().classes('w-full max-w-7xl mx-auto py-8 space-y-16'):
-        # Hero Section
-        with ui.row().classes(
-            'w-full h-[50vh] bg-cover bg-center flex items-center justify-center text-center text-white'
-        ).style(
-            'background-image: url("https://images.unsplash.com/photo-1584697964193-40b0a4f1c95e?auto=format&fit=crop&w=1600&q=80")'
-        ):
-            with ui.column().classes('items-center justify-center bg-black bg-opacity-40 p-8 rounded-xl max-w-4xl'):
-                ui.label('Explore Courses').classes('text-5xl font-extrabold mb-4')
-                ui.label(
-                    'Find the perfect course to enhance your skills and knowledge. '
-                    'Browse our catalog or use filters to narrow your search.'
-                ).classes('text-xl text-center max-w-3xl mb-8')
-                with ui.row().classes('w-full max-w-lg justify-center'):
-                    ui.input(placeholder='Search for courses, e.g. "Web Development"').classes(
-                        'flex-1')
-                    ui.button(
-                        'Search', on_click=lambda: ui.notify('Searching...')).classes('ml-2')
+    with ui.column().classes('w-full items-start pl-8 pt-8'):
+        ui.label('Welcome to BridgeLMS course panel !').classes('text-small italic')
+    with ui.column().classes('w-full items-center mt-4'):
+            ui.label('Explore Our Courses').classes('text-4xl font-bold')
+            ui.label(
+                'Find the perfect course to advance your skills and knowledge.'
+            ).classes('text-lg mt-2').style('color: var(--text-titles)')
+
+            with ui.row().classes('mt-8 items-center justify-center'):
+                ui.button('All Categories', on_click=lambda: ui.notify('All')).style('background-color: var(--primary-brand); color: white;')
+                # ui.button('Web Design', on_click=lambda: ui.notify('Web Design'))
+                ui.link(
+                    'Cybersecurity',
+                    'https://www.eccouncil.org/cybersecurity-exchange/cyber-novice/free-cybersecurity-courses-beginners/',
+                    new_tab=True
+                ).classes('q-btn').style('background-color: var(--primary-brand); color: white; text-decoration: none;')
+                ui.button(
+                    'Web Development',
+                    on_click=lambda: ui.notify('Web Development'),
+                ).style('background-color: var(--primary-brand); color: white;')
+                ui.button(
+                    'Data Science', on_click=lambda: ui.notify('Data Science')
+                ).style('background-color: var(--primary-brand); color: white;')
+                ui.button('Marketing', on_click=lambda: ui.notify('Marketing')).style('background-color: var(--primary-brand); color: white;')
+
+            # with ui.column().classes('items-center justify-center  bg-opacity-40 p-8 rounded-xl max-w-4xl'):
+             
+            #     ui.label('Explore Courses').classes('text-5xl font-extrabold mb-4')
+            #     ui.label(
+            #         'Find the perfect course to advance your skills and knowledge.'
+            #     ).classes('text-xl text-center max-w-3xl mb-8')
+            #     with ui.row().classes('w-full max-w-lg justify-center'):
+            #         ui.input(placeholder='Search for courses, e.g. "Web Development"').classes(
+            #             'flex-1')
+                # ui.button(
+                #         'Search', on_click=lambda: ui.notify('Searching...')).classes('ml-2')
+                with ui.column().classes('w-full items-center px-4 gap-8'):
+                    with ui.column().classes('w-full max-w-6xl'):
+                        ui.label('Filter Courses').classes('text-3xl font-bold items-leftalign mb-0')
+                with ui.row().classes('w-full gap-4'):
+                        ui.select(['All', 'Web Development', 'Data Science', 'Marketing', 'Business', 'Design'],
+                                  label='Category', on_change=lambda e: filters.update({'category': e.value}) or update_courses()).classes('flex-1')
+                        ui.select(['All', 'Active', 'Completed'], label='Status', on_change=lambda e: filters.update(
+                            {'status': e.value}) or update_courses()).classes('flex-1')
+                        ui.select(['All', 'Dr. Reed', 'Ms. Rossi'], label='Tutor', on_change=lambda e: filters.update(
+                            {'tutor': e.value}) or update_courses()).classes('flex-1')
+                        ui.select(['Relevance', 'Popularity', 'Newest'], label='Sort', on_change=lambda e: filters.update({'sort': e.value}) or update_courses()).classes('flex-1')
 
         # Featured Courses Section
-        with ui.column().classes('w-full items-center px-4'):
-            ui.label('Featured Courses').classes(
+                with ui.column().classes('w-full items-center px-4'):
+                 ui.label('Featured Courses').classes(
                 'text-4xl font-bold text-gray-800')
             with ui.grid(columns=3).classes('w-full max-w-6xl gap-8 mt-8'):
                 featured_courses = [
@@ -105,22 +135,21 @@ def courses() -> None:
                             ui.label(desc).classes('text-gray-600 mt-2')
 
         # All Courses Section
-        with ui.row().classes('w-full px-4 gap-8'):
+    with ui.column().classes('w-full items-center px-4 gap-8'):
             # Filters
-            with ui.column().classes('w-1/4 justify-center'):
-                with ui.card().classes('p-6 shadow-lg rounded-xl bg-white'):
-                    ui.label('Filter Courses').classes('text-3xl font-bold mb-4')
-                    with ui.column().classes('space-y-4'):
+            with ui.column().classes('w-full max-w-6xl'):
+                ui.label('Filter Courses').classes('text-3xl font-bold mb-4')
+                with ui.row().classes('w-full gap-4'):
                         ui.select(['All', 'Web Development', 'Data Science', 'Marketing', 'Business', 'Design'],
-                                  label='Category', on_change=lambda e: filters.update({'category': e.value}) or update_courses()).classes('w-full')
+                                  label='Category', on_change=lambda e: filters.update({'category': e.value}) or update_courses()).classes('flex-1')
                         ui.select(['All', 'Active', 'Completed'], label='Status', on_change=lambda e: filters.update(
-                            {'status': e.value}) or update_courses()).classes('w-full')
+                            {'status': e.value}) or update_courses()).classes('flex-1')
                         ui.select(['All', 'Dr. Reed', 'Ms. Rossi'], label='Tutor', on_change=lambda e: filters.update(
-                            {'tutor': e.value}) or update_courses()).classes('w-full')
-                        ui.select(['Relevance', 'Popularity', 'Newest'], label='Sort', on_change=lambda e: filters.update({'sort': e.value}) or update_courses()).classes('w-full')
+                            {'tutor': e.value}) or update_courses()).classes('flex-1')
+                        ui.select(['Relevance', 'Popularity', 'Newest'], label='Sort', on_change=lambda e: filters.update({'sort': e.value}) or update_courses()).classes('flex-1')
 
             # Course Grid
-            with ui.column().classes('w-3/4'):
+            with ui.column().classes('w-full max-w-6xl'):
                 course_grid = ui.grid(columns=3).classes('w-full gap-8 mt-4')
                 update_courses()
 
