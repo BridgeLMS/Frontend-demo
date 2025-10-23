@@ -9,29 +9,30 @@ def home() -> None:
     with ui.column().classes('w-full items-center'):
         # Hero Section
         with ui.row().classes(
-            'w-full h-screen bg-cover bg-center flex items-center justify-center'
+            'w-full h-[70vh] bg-cover bg-center flex items-center justify-center'
         ).style(
-            'background-image: url("assets/Images/BridgeTeam.jpg")'
+            'background-image: url("assets/Images/Team2.jpeg")'
         ):
             
             
-            with ui.column().classes('items-center text-white bg-black bg-opacity-30 p-6 rounded-xl mt-64 w-auto max-w-3xl mx-auto').style("font-family: 'Montserrat', sans-serif"):
-                ui.label('Welcome to BridgeLMS!').classes('text-4xl font-bold').style('color: var(--text-titles)')
-                ui.label('Bridging Gaps, Building Futures').classes(
-                    'text-5xl font-bold'
-                )
-                ui.label(
-                    'BridgeLMS is your all-in-one platform for seamless learning and teaching.'
-                ).classes('text-xl mt-4')
-                with ui.row().classes('mt-8'):
+            with ui.column().classes('items-center px-16 py-1 rounded-xl w-full max-w-3xl mx-auto mt-64').style("font-family: 'Montserrat', sans-serif; background-color: #965c40;"):
+                ui.label('Welcome to BridgeLMS!').classes('text-4xl font-bold text-1E3A8A')
+                with ui.column().classes('items-center gap-0'):
+                    ui.label('Bridging Gaps, Building Futures').classes(
+                        'text-4xl font-bold'
+                    ).style('color: var(--primary-brand)')
+                    ui.label(
+                        'BridgeLMS is your all-in-one platform for seamless learning and teaching.'
+                    ).classes('text-base text-center text-white italic')
+                with ui.row().classes('mt-2'):
                     
                     ui.button(
                         "I am a Learner",
                         on_click=lambda: ui.navigate.to('/login'),
-                    ).classes('m-2').style('background-color: var(--accent); color: white;')
+                    ).classes('m-2').style('background-color: var(--primary-brand); color: white;')
                     ui.button(
                         "I am a Tutor", on_click=lambda: ui.navigate.to('/login')
-                    ).classes('m-2').style('background-color: var(--accent); color: white;')
+                    ).classes('m-2').style('background-color: var(--primary-brand); color: white;')
                     
 
         # # Explore Our Courses Section
