@@ -120,7 +120,7 @@ def dashboard():
                 # ---------- LEFT SIDEBAR ----------
                 with ui.column().classes('sidebar space-y-2'):
                     ui.label('OVERVIEW').classes('text-xs font-bold text-gray-500 uppercase tracking-wider px-4')
-                    ui.button('Home', icon='home', on_click=lambda: ui.open('/')).props('flat no-caps')
+                    ui.button('Home', icon='home', on_click=lambda: ui.navigate.to('/')).props('flat no-caps')
                     ui.button('Inbox', icon='mail').props('flat no-caps')
                     ui.button('Lesson', icon='menu_book', on_click=lambda: ui.open('/courses')).props('flat no-caps')
                     ui.button('Task', icon='check_circle', on_click=lambda: ui.navigate.to('/calendar')).props('flat no-caps')
