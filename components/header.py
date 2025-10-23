@@ -23,6 +23,7 @@ def header() -> None:
             ui.button(
                 'Get Started', on_click=lambda: ui.navigate.to('/login')).classes(
                 'mx-2'
+            ).style('background-color: var(--accent); color: black;')
             ).style('background-color: var(--accent); color: white;')
             'flex items-center justify-between px-8 py-3 border-b border-gray-200 bg-white text-black'
 
