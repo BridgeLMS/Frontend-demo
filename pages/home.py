@@ -3,51 +3,59 @@ from nicegui import ui
 
 def home() -> None:
     """Create the home page."""
+    ui.add_css('''
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+    ''')
     with ui.column().classes('w-full items-center'):
         # Hero Section
         with ui.row().classes(
-            'w-full h-screen bg-cover bg-center flex items-center justify-center'
+            'w-full h-[70vh] bg-cover bg-center flex items-center justify-center'
         ).style(
-            'background-image: url("assets/Images/BridgeTeam.jpg")'
+            'background-image: url("assets/Images/Team2.jpeg")'
         ):
-            with ui.column().classes('items-center text-white bg-black bg-opacity-40 p-8 rounded-xl'):
-                ui.label('Welcome to BridgeLMS!').classes('text-4xl font-bold').style('color: var(--text-titles)')
-                ui.label('Bridging Gaps, Building Futures').classes(
-                    'text-5xl font-bold'
-                )
-                ui.label(
-                    'BridgeLMS is your all-in-one platform for seamless learning and teaching.'
-                ).classes('text-xl mt-4')
-                with ui.row().classes('mt-8'):
+            
+            
+            with ui.column().classes('items-center px-16 py-1 rounded-xl w-full max-w-3xl mx-auto mt-64').style("font-family: 'Montserrat', sans-serif; background-color: #965c40;"):
+                ui.label('Welcome to BridgeLMS!').classes('text-4xl font-bold text-1E3A8A')
+                with ui.column().classes('items-center gap-0'):
+                    ui.label('Bridging Gaps, Building Futures').classes(
+                        'text-4xl font-bold'
+                    ).style('color: var(--primary-brand)')
+                    ui.label(
+                        'BridgeLMS is your all-in-one platform for seamless learning and teaching.'
+                    ).classes('text-base text-center text-white italic')
+                with ui.row().classes('mt-2'):
+                    
                     ui.button(
-                        "I'm a Learner",
+                        "I am a Learner",
                         on_click=lambda: ui.navigate.to('/login'),
-                    ).classes('m-2').style('background-color: var(--accent); color: white;')
+                    ).classes('m-2').style('background-color: var(--primary-brand); color: white;')
                     ui.button(
-                        "I'm a Tutor", on_click=lambda: ui.navigate.to('/login')
-                    ).classes('m-2').style('background-color: var(--accent); color: white;')
+                        "I am a Tutor", on_click=lambda: ui.navigate.to('/login')
+                    ).classes('m-2').style('background-color: var(--primary-brand); color: white;')
+                    
 
         # # Explore Our Courses Section
-        with ui.column().classes('w-full items-center my-16'):
-            ui.label('Explore Our Courses').classes('text-4xl font-bold')
-            ui.label(
-                'Find the perfect course to advance your skills and knowledge.'
-            ).classes('text-lg mt-2').style('color: var(--text-titles)')
+        # with ui.column().classes('w-full items-center my-16'):
+        #     ui.label('Explore Our Courses').classes('text-4xl font-bold')
+        #     ui.label(
+        #         'Find the perfect course to advance your skills and knowledge.'
+        #     ).classes('text-lg mt-2').style('color: var(--text-titles)')
 
-            with ui.row().classes('mt-8'):
-                ui.button('All Categories', on_click=lambda: ui.notify('All')).style('background-color: var(--primary-brand); color: white;')
-                # ui.button('Web Design', on_click=lambda: ui.notify('Web Design'))
-                ui.button(
-                    'Cybersecurity', on_click=lambda: ui.notify('Cybersecurity')
-                ).style('background-color: var(--primary-brand); color: white;')
-                ui.button(
-                    'Web Development',
-                    on_click=lambda: ui.notify('Web Development'),
-                ).style('background-color: var(--primary-brand); color: white;')
-                ui.button(
-                    'Data Science', on_click=lambda: ui.notify('Data Science')
-                ).style('background-color: var(--primary-brand); color: white;')
-                ui.button('Marketing', on_click=lambda: ui.notify('Marketing')).style('background-color: var(--primary-brand); color: white;')
+        #     with ui.row().classes('mt-8'):
+        #         ui.button('All Categories', on_click=lambda: ui.notify('All')).style('background-color: var(--primary-brand); color: white;')
+        #         # ui.button('Web Design', on_click=lambda: ui.notify('Web Design'))
+        #         ui.button(
+        #             'Cybersecurity', on_click=lambda: ui.notify('Cybersecurity')
+        #         ).style('background-color: var(--primary-brand); color: white;')
+        #         ui.button(
+        #             'Web Development',
+        #             on_click=lambda: ui.notify('Web Development'),
+        #         ).style('background-color: var(--primary-brand); color: white;')
+        #         ui.button(
+        #             'Data Science', on_click=lambda: ui.notify('Data Science')
+        #         ).style('background-color: var(--primary-brand); color: white;')
+        #         ui.button('Marketing', on_click=lambda: ui.notify('Marketing')).style('background-color: var(--primary-brand); color: white;')
 
         #     with ui.grid(columns=3).classes('w-full max-w-5xl gap-8 mt-8'):
         #         for title, desc, price in [

@@ -4,10 +4,14 @@ from nicegui import ui
 def header() -> None:
     """Create the header component."""
     ui.add_head_html('<link rel="stylesheet" href="/assets/style.css">')
+
     with ui.header().classes(
         'flex items-center justify-between shadow-md'
     ).style('background-color: var(--card-surface-light); color: var(--text-titles);'):
-        ui.label('BridgeLMS').classes('text-2xl font-bold')
+        
+        with ui.row().classes('items-center'):
+            ui.image('/assets/Images/logo.png.jpg').classes('w-12')
+            ui.label('BridgeLMS').classes('text-2xl font-bold')
         with ui.row().classes('items-center'):
             ui.link('Home', '/').classes('text-lg mx-4 no-underline').style('color: var(--text-titles);')
             # ui.link('About', '/about').classes('text-lg mx-4')
@@ -20,3 +24,34 @@ def header() -> None:
                 'Get Started', on_click=lambda: ui.navigate.to('/login')).classes(
                 'mx-2'
             ).style('background-color: var(--accent); color: black;')
+            ).style('background-color: var(--accent); color: white;')
+            'flex items-center justify-between px-8 py-3 border-b border-gray-200 bg-white text-black'
+
+# with ui.row().classes('items-center gap-2'):
+#             ui.icon('school').classes('text-3xl text-black')
+#             ui.link('BridgeLMS', '/').classes(
+#                 'text-2xl font-semibold tracking-tight no-underline text-black'
+#             )
+
+# with ui.row().classes('items-center gap-8 text-base font-medium text-gray-700'):
+#             with ui.row().classes('items-center gap-1 cursor-pointer hover:text-black'):
+#                 ui.label('Courses')
+#                 ui.icon('expand_more').classes('text-lg')
+#             with ui.row().classes('items-center gap-1 cursor-pointer hover:text-black'):
+#                 ui.label('Bootcamps')
+#                 ui.icon('expand_more').classes('text-lg')
+#             ui.link('Community', '/community').classes(
+#                 'no-underline text-gray-700 hover:text-black'
+#             )
+#             ui.link('About', '/about').classes(
+#                 'no-underline text-gray-700 hover:text-black'
+#             )
+#             ui.link('Flash Sale', '/flash-sale').classes(
+#                 'no-underline text-gray-700 hover:text-black'
+#             )
+
+# ui.button(
+#             'Sign in', on_click=lambda: ui.navigate.to('/login')
+#         ).classes(
+#             'bg-black text-white rounded-full px-5 py-2 text-base font-semibold shadow-sm hover:bg-gray-900'
+#         )

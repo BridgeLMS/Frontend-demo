@@ -15,6 +15,9 @@ from pages.signup import signup
 @ui.page('/')
 def main():
     """Main page layout."""
+    from components.header import header
+    from pages.home import home
+    from components.footer import footer
     header()
     home()
     footer()
@@ -23,6 +26,7 @@ def main():
 @ui.page('/dashboard')
 def dashboard_page():
     """Dashboard page layout."""
+    from pages.learner_dashboard import dashboard as learner_dashboard
     learner_dashboard()
 
 
@@ -37,6 +41,9 @@ def show_calendar_page():
 @ui.page('/courses')
 def courses_page():
     """Courses page layout."""
+    from components.header import header
+    from pages.courses import courses
+    from components.footer import footer
     header()
     courses()
     footer()
@@ -44,8 +51,10 @@ def courses_page():
 
 @ui.page('/contact')
 def contact_page():
-    """Contact page 
-layout."""
+    """Contact page layout."""
+    from components.header import header
+    from pages.contact import contact
+    from components.footer import footer
     header()
     contact()
     footer()
@@ -54,18 +63,21 @@ layout."""
 @ui.page('/login')
 def login_page():
     """Login page layout."""
+    from pages.login import login
     login()
 
 
 @ui.page('/tutor-dashboard')
 def tutor_dashboard_page():
     """Tutor dashboard page layout."""
+    from pages.tutor_dashboard import tutor_dashboard
     tutor_dashboard()
 
 
 @ui.page('/signup')
 def signup_page():
     """Sign up page layout."""
+    from pages.signup import signup
     signup()
 
 
