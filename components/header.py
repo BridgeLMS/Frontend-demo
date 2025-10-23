@@ -7,18 +7,18 @@ def header() -> None:
 
     with ui.header().classes(
         'flex items-center justify-between shadow-md'
-    ).style('background-color: var(--card-surface-light); color: var(--text-titles);'):
+    ).style('background: linear-gradient(to right, #000428, #004e92); color: white;'):
         
         with ui.row().classes('items-center'):
             ui.image('/assets/Images/logo.png.jpg').classes('w-12')
             ui.label('BridgeLMS').classes('text-2xl font-bold')
         with ui.row().classes('items-center'):
-            ui.link('Home', '/').classes('text-lg mx-4 no-underline').style('color: var(--text-titles);')
+            ui.link('Home', '/').classes('text-lg mx-4 no-underline').style('color: white;')
             # ui.link('About', '/about').classes('text-lg mx-4')
-            ui.link('Courses', '/courses').classes('text-lg mx-4 no-underline').style('color: var(--text-titles);')
+            ui.link('Courses', '/courses').classes('text-lg mx-4 no-underline').style('color: white;')
             # ui.link('Contact', '/contact').classes('text-lg mx-4 no-underline')
-            ui.link('Learner Dashboard', '/dashboard').classes('text-lg mx-4 no-underline').style('color: var(--text-titles);')
-            ui.link('Tutor Dashboard', '/tutor-dashboard').classes('text-lg mx-4 no-underline').style('color: var(--text-titles);')
+            ui.link('Learner Dashboard', '/dashboard').classes('text-lg mx-4 no-underline').style('color: white;')
+            ui.link('Tutor Dashboard', '/tutor-dashboard').classes('text-lg mx-4 no-underline').style('color: white;')
         with ui.row().classes('items-center'):
             ui.button(
                 'Get Started', on_click=lambda: ui.navigate.to('/login')).classes(
