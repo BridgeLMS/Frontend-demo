@@ -69,12 +69,6 @@ def signup_page():
     signup()
 
 
-# @ui.page('/about')
-# def about_page():
-#     """About page layout."""
-#     header()
-#     about()
-#     footer()
 
 
 app.add_static_files('/assets', 'assets')
