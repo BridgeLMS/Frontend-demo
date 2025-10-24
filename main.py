@@ -1,15 +1,4 @@
 from nicegui import ui, app
-from components.footer import footer
-from components.header import header
-from pages.home import home
-from pages.learner_dashboard import dashboard as learner_dashboard
-from pages.courses import courses
-from pages.contact import contact
-from pages.calendar import calendar_page
-from pages.login import login
-from pages.tutor_dashboard import tutor_dashboard
-from pages.signup import signup
-# aboutfrom pages.about import 
 
 
 @ui.page('/')
@@ -38,6 +27,9 @@ def dashboard_page():
 @ui.page('/calendar')
 def show_calendar_page():
     """Calendar page layout."""
+    from components.header import header
+    from pages.calendar import calendar_page
+    from components.footer import footer
     header()
     calendar_page()
     footer()
@@ -86,6 +78,11 @@ def signup_page():
     signup()
 
 
+@ui.page('/inbox')
+def inbox_page():
+    """Inbox page layout."""
+    from pages.inbox import mailbox_page
+    mailbox_page()
 
 
 app.add_static_files('/assets', 'assets')
