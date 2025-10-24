@@ -8,6 +8,16 @@ def courses() -> None:
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
     body {
         font-family: 'Montserrat', Times New Roman, serif;
+        background: linear-gradient(to right, #a8c0ff, #3f2b96);
+        color: white;
+    }
+    .filter-section .q-field__label,
+    .filter-section .q-field__native,
+    .filter-section .q-select__dropdown-icon {
+        color: white !important;
+    }
+    .filter-section .q-field__native::placeholder {
+        color: #eee !important;
     }
     ''')
     
@@ -72,11 +82,11 @@ def courses() -> None:
          with ui.column().classes('w-full items-center'):
             
             ui.label('Welcome to BridgeLMS course panel !').classes(
-                'text-small background italic')
-            ui.label('Explore Our Courses').classes('text-4xl font-bold')
+                'text-small background italic text-white')
+            ui.label('Explore Our Courses').classes('text-4xl font-bold text-white')
             ui.label(
                 'Find the perfect course to advance your skills and knowledge.'
-            ).classes('text-lg mt-2')
+            ).classes('text-lg mt-2 text-white')
             with ui.row().classes('mt-8 items-center justify-center'):
                 ui.button('All Categories', on_click=lambda: ui.notify('All')).style(
                     'background-color: var(--primary-brand); color: white;')
@@ -96,8 +106,8 @@ def courses() -> None:
                     'background-color: var(--primary-brand); color: white;')
 
         # Filter section
-        with ui.column().classes('w-full max-w-6xl px-4'):
-            ui.label('Filter Courses').classes('text-3xl font-bold mb-4')
+        with ui.column().classes('w-full max-w-6xl px-4 filter-section'):
+            ui.label('Filter Courses').classes('text-3xl font-bold mb-4 text-white')
             with ui.row().classes('w-full gap-4 items-center'):
                 search_input = ui.input(placeholder='Search for courses...').classes(
                     'flex-1').on('keydown.enter', lambda: filters.update({'search': search_input.value}) or update_courses())
@@ -116,7 +126,7 @@ def courses() -> None:
         # Featured Courses Section
         with ui.column().classes('w-full max-w-6xl px-4'):
             ui.label('Featured Courses').classes(
-                'text-4xl font-bold text-gray-800')
+                'text-4xl font-bold text-white')
             with ui.grid(columns=3).classes('w-full gap-8 mt-8'):
                 featured_courses = [
                     (
@@ -147,7 +157,7 @@ def courses() -> None:
         # All Courses Section
         with ui.column().classes('w-full max-w-6xl px-4'):
             ui.label('All Courses').classes(
-                'text-4xl font-bold text-gray-800')
+                'text-4xl font-bold text-white')
             course_grid = ui.grid(columns=3).classes('w-full gap-8 mt-4')
             update_courses()
             # Pagination
