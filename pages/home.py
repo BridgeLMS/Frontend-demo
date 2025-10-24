@@ -15,12 +15,12 @@ def home() -> None:
         ):
             
             
-            with ui.column().classes('items-center px-16 py-1 rounded-xl w-full max-w-3xl mx-auto mt-64').style("font-family: 'Montserrat', Times New Roman; background-color: #002a47;"):
-                ui.label('Welcome to BridgeLMS!').classes('text-4xl font-bold text-white')
+            with ui.column().classes('items-center px-16 py-1 rounded-xl w-full max-w-3xl mx-auto mt-64').style("font-family: 'Montserrat', Times New Roman; background: linear-gradient(to right, #00426a, #1A2C46); color: white;"):
+                ui.label('Welcome to BridgeLMS!').classes('text-3xl font-bold text-white')
                 with ui.column().classes('items-center gap-0'):
                     ui.label('Bridging Gaps, Building Futures').classes(
                         'text-4xl font-bold'
-                    ).style('color: var(--primary-brand)')
+                    ).style('color: #32b0ff')
                     ui.label(
                         'BridgeLMS is your all-in-one platform for seamless learning and teaching.'
                     ).classes('text-base text-center text-white italic')
@@ -29,7 +29,7 @@ def home() -> None:
                     ui.button(
                         "Learner Login",
                         on_click=lambda: ui.navigate.to('/login'),
-                    ).classes('m-2').style('background-color: var(--primary-brand); color: white;')
+                    ).classes('m-2').style('background: linear-gradient(to right, #00426a, #1A2C46); color: white; border: none;')
                     ui.button(
                         "Tutor Login", on_click=lambda: ui.navigate.to('/login')
                     ).classes('m-2').style('background-color: var(--primary-brand); color: white;')
@@ -63,8 +63,8 @@ def home() -> None:
                         'Track attendance with our innovative facial verification system.',
                     ),
                 ]:
-                    with ui.card().classes('items-center text-center').style('background-color: var(--card-surface-light);'):
-                        ui.icon(icon).classes('text-5xl').style('color: var(--primary-brand)')
+                    with ui.card().classes('items-center text-center').style('background-color: white;'):
+                        ui.icon(icon).classes('text-5xl').style('color: #32b0ff')
                         ui.label(title).classes('text-xl font-bold mt-4')
                         ui.label(desc).classes('mt-2').style('color: var(--text-titles)')
 

@@ -9,18 +9,28 @@ from pages.calendar import calendar_page
 from pages.login import login
 from pages.tutor_dashboard import tutor_dashboard
 from pages.signup import signup
-# aboutfrom pages.about import 
+# aboutfrom pages.about import about
+
+
+def main_layout():
+    """Create the main layout with header and necessary scripts."""
+    ui.add_head_html('<link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">')
+    header()
 
 
 @ui.page('/')
 def main():
     """Main page layout."""
-    from components.header import header
     from pages.home import home
     from components.footer import footer
-    header()
+    main_layout()
     home()
     footer()
+    # Back to top button
+    ui.button(icon='arrow_upward', on_click=lambda: ui.run_javascript('window.scrollTo({top: 0, behavior: "smooth"})')) \
+        .props('fab-mini') \
+        .classes('fixed bottom-8 right-8 z-50') \
+        .style('background-color: #007bff; color: white;')
 
 
 @ui.page('/dashboard')
@@ -33,7 +43,7 @@ def dashboard_page():
 @ui.page('/calendar')
 def show_calendar_page():
     """Calendar page layout."""
-    header()
+    main_layout()
     calendar_page()
     footer()
 
@@ -41,10 +51,9 @@ def show_calendar_page():
 @ui.page('/courses')
 def courses_page():
     """Courses page layout."""
-    from components.header import header
     from pages.courses import courses
     from components.footer import footer
-    header()
+    main_layout()
     courses()
     footer()
 
@@ -52,10 +61,9 @@ def courses_page():
 @ui.page('/contact')
 def contact_page():
     """Contact page layout."""
-    from components.header import header
     from pages.contact import contact
     from components.footer import footer
-    header()
+    main_layout()
     contact()
     footer()
 
@@ -84,7 +92,7 @@ def signup_page():
 # @ui.page('/about')
 # def about_page():
 #     """About page layout."""
-#     header()
+#     main_layout()
 #     about()
 #     footer()
 
