@@ -9,15 +9,24 @@ USERS = {'user@example.com': 'password123', 'admin': 'adminpass'}
 def login() -> None:
     """Create the login page."""
 
-    def handle_login():
+    async def handle_login():
         """Handle the login attempt."""
-        username = username_input.value
-        password = password_input.value
-        if USERS.get(username) == password:
-            ui.notify('Login successful!', color='positive')
-            ui.navigate.to('/dashboard')
+        print("handle_login called")
+        success, message, token, user_id, role, name = api_login(
+            username_input.value,
+            password_input.value
+        )
+        if success:
+            set_session(token, role, user_id, name)
+            ui.notify(message, color='positive')
+            if role == 'learner':
+                ui.navigate.to('/learner-dashboard')
+            elif role == 'tutor':
+                ui.navigate.to('/tutor-dashboard')
+            else:
+                ui.navigate.to('/')
         else:
-            ui.notify('Invalid email/username or password', color='negative')
+            ui.notify(message, color='negative')
 
     with ui.column().classes('w-full h-screen flex items-center justify-center bg-gray-100'):
         with ui.card().classes('w-full max-w-md p-8 rounded-lg shadow-lg'):

@@ -80,27 +80,7 @@ def api_signup(username: str, email: str, password: str, role: str, phone: str, 
     Attempts to sign up a user. Falls back to local mock system if remote API fails.
     Returns (success, message, token, user_id).
     """
-    try:
-        payload = {
-            'username': username,
-            'email': email,
-            'password': password,
-            'role': role,
-            'phone': phone,
-            'bio': bio,
-        }
-        r = requests.post(f"{base_url}/auth/signup", json=payload, timeout=15)
-        if 200 <= r.status_code < 300:
-            data = r.json()
-            token = data.get('token') or data.get('access_token')
-            user_id = (data.get('user') or {}).get('id') or data.get('user_id')
-            return True, 'Account created', token, user_id
-        else:
-            # Fallback to local mock system if remote API fails
-            return _local_signup(username, email, password, role,phone,bio)
-    except Exception as e:
-        # Fallback to local mock system if remote API fails
-        return _local_signup(username, email, password, role,phone,bio)
+    return _local_signup(username, email, password, role,phone,bio)
 
 
 def _local_signup(username: str, email: str, password: str, role: str, phone: str, bio: str) -> Tuple[bool, str, Optional[str], Optional[str]]:
@@ -108,7 +88,7 @@ def _local_signup(username: str, email: str, password: str, role: str, phone: st
     Local mock signup implementation.
     """
     try:
-        from .frontend_store import create_user, hash_password
+        from .frontend_store import create_user
         user = create_user(username, email, password, role, phone, bio)
         # Generate a mock token
         token = f"mock_token_{user['id']}"
