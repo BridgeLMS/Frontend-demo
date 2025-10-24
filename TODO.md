@@ -1,1 +1,0 @@
-- [x] Add on_click to "Continue" buttons in progress_card to navigate to '/courses'

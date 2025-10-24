@@ -5,8 +5,8 @@ def header() -> None:
     """Create the header component."""
     ui.add_head_html('<link rel="stylesheet" href="/assets/style.css">')
 
-    with ui.header().classes(
-        'flex items-center justify-between shadow-md'
+    with ui.element('header').classes(
+        'flex items-center justify-between shadow-md w-full p-4'
     ).style('background: linear-gradient(to right, #000428, #004e92); color: white;'):
         
         with ui.row().classes('items-center'):
