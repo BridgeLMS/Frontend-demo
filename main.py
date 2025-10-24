@@ -43,6 +43,10 @@ def dashboard_page():
 @ui.page('/calendar')
 def show_calendar_page():
     """Calendar page layout."""
+    from components.header import header
+    from pages.calendar import calendar_page
+    from components.footer import footer
+    header()
     main_layout()
     calendar_page()
     footer()
@@ -89,6 +93,11 @@ def signup_page():
     signup()
 
 
+@ui.page('/inbox')
+def inbox_page():
+    """Inbox page layout."""
+    from pages.inbox import mailbox_page
+    mailbox_page()
 # @ui.page('/about')
 # def about_page():
 #     """About page layout."""

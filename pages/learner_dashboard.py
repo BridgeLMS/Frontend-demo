@@ -53,14 +53,15 @@ def dashboard():
     }
     body {
         font-family: 'Poppins', sans-serif;
-        background-color: var(--background);
+        background: linear-gradient(to right, #002a47, #005f98);
+        color: white;
     }
     .app {
         min-height: 100vh;
     }
     .container {
         width: 100%;
-        padding-top: 2rem;
+        padding-top: 0.5rem;
         padding-bottom: 2rem;
         padding-right: 2rem;
     }
@@ -118,7 +119,7 @@ def dashboard():
         with ui.element('main').classes('container'):
             with ui.element('div').classes('grid'):
                 # ---------- LEFT SIDEBAR ----------
-                with ui.column().classes('sidebar space-y-2'):
+                with ui.column().classes('sidebar'):
                     ui.label('OVERVIEW').classes('text-xs font-bold text-gray-500 uppercase tracking-wider px-4')
                     ui.button('Home', icon='home', on_click=lambda: ui.navigate.to('/')).props('flat no-caps')
                     ui.button('Inbox', icon='mail').props('flat no-caps')
