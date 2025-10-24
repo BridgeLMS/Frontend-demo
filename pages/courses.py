@@ -66,57 +66,16 @@ def courses() -> None:
                         ui.label(course['title']).classes('text-lg font-bold')
                         ui.label(course['desc']).classes('text-gray-600 mt-2')
 
-    with ui.column().classes('w-full items-center gap-8'):
-        # Welcome/Header section
-        with ui.element('div').classes('banner'):
-         with ui.column().classes('w-full items-center'):
-            
-            ui.label('Welcome to BridgeLMS course panel !').classes(
-                'text-small background italic')
-            ui.label('Explore Our Courses').classes('text-4xl font-bold')
-            ui.label(
-                'Find the perfect course to advance your skills and knowledge.'
-            ).classes('text-lg mt-2')
-            with ui.row().classes('mt-8 items-center justify-center'):
-                ui.button('All Categories', on_click=lambda: ui.notify('All')).style(
-                    'background-color: var(--primary-brand); color: white;')
-                ui.link(
-                    'Cybersecurity',
-                    'https://www.eccouncil.org/cybersecurity-exchange/cyber-novice/free-cybersecurity-courses-beginners/',
-                    new_tab=True
-                ).classes('q-btn').style('background-color: var(--primary-brand); color: white; text-decoration: none;')
-                ui.button(
-                    'Web Development',
-                    on_click=lambda: ui.notify('Web Development'),
-                ).style('background-color: var(--primary-brand); color: white;')
-                ui.button(
-                    'Data Science', on_click=lambda: ui.notify('Data Science')
-                ).style('background-color: var(--primary-brand); color: white;')
-                ui.button('Marketing', on_click=lambda: ui.notify('Marketing')).style(
-                    'background-color: var(--primary-brand); color: white;')
+    # Hero Section
+    with ui.row().classes('w-full h-[30vh] bg-cover bg-center relative').style('background-image: url("/assets/Images/courses.jpg")'):
+        with ui.column().classes('absolute-full flex flex-center justify-center').style('background-color: rgba(4, 2, 4, 0.6)'):
+            ui.label('Our Courses').classes('text-5xl font-bold text-white')
 
-        # Filter section
-        with ui.column().classes('w-full max-w-6xl px-4'):
-            ui.label('Filter Courses').classes('text-3xl font-bold mb-4')
-            with ui.row().classes('w-full gap-4 items-center'):
-                search_input = ui.input(placeholder='Search for courses...').classes(
-                    'flex-1').on('keydown.enter', lambda: filters.update({'search': search_input.value}) or update_courses())
-                ui.button('Search', on_click=lambda: filters.update(
-                    {'search': search_input.value}) or update_courses())
-            with ui.row().classes('w-full gap-4 mt-4'):
-                ui.select(['All', 'Web Development', 'Data Science', 'Marketing', 'Business', 'Design'],
-                          label='Category', on_change=lambda e: filters.update({'category': e.value}) or update_courses()).classes('flex-1')
-                ui.select(['All', 'Active', 'Completed'], label='Status', on_change=lambda e: filters.update(
-                    {'status': e.value}) or update_courses()).classes('flex-1')
-                ui.select(['All', 'Dr. Reed', 'Ms. Rossi'], label='Tutor', on_change=lambda e: filters.update(
-                    {'tutor': e.value}) or update_courses()).classes('flex-1')
-                ui.select(['Relevance', 'Popularity', 'Newest'], label='Sort', on_change=lambda e: filters.update(
-                    {'sort': e.value}) or update_courses()).classes('flex-1')
-
-        # Featured Courses Section
+    # Featured Courses Section
+    with ui.column().classes('w-full items-center py-16').style('background: linear-gradient(to bottom, #002a47, #00426a);'):
         with ui.column().classes('w-full max-w-6xl px-4'):
             ui.label('Featured Courses').classes(
-                'text-4xl font-bold text-gray-800')
+                'text-4xl font-bold text-white')
             with ui.grid(columns=3).classes('w-full gap-8 mt-8'):
                 featured_courses = [
                     (
@@ -144,10 +103,11 @@ def courses() -> None:
                             ui.label(title).classes('text-xl font-bold')
                             ui.label(desc).classes('text-gray-600 mt-2')
 
-        # All Courses Section
+    # All Courses Section
+    with ui.column().classes('w-full items-center py-16').style('background: linear-gradient(to bottom, #00426a, #005f98);'):
         with ui.column().classes('w-full max-w-6xl px-4'):
             ui.label('All Courses').classes(
-                'text-4xl font-bold text-gray-800')
+                'text-4xl font-bold text-white')
             course_grid = ui.grid(columns=3).classes('w-full gap-8 mt-4')
             update_courses()
             # Pagination
