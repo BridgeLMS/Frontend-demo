@@ -21,6 +21,11 @@ def main():
     header()
     home()
     footer()
+    # Back to top button
+    ui.button(icon='arrow_upward', on_click=lambda: ui.run_javascript('window.scrollTo({top: 0, behavior: "smooth"})')) \
+        .props('fab-mini') \
+        .classes('fixed bottom-8 right-8 z-50') \
+        .style('background-color: #007bff; color: white;')
 
 
 @ui.page('/dashboard')
