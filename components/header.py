@@ -13,6 +13,8 @@ def header() -> None:
             ui.image('/assets/Images/logo.png.jpg').classes('w-12')
             ui.label('BridgeLMS').classes('text-2xl font-bold')
         with ui.row().classes('items-center'):
+            ui.link('Home', '/').classes('text-lg mx-4 no-underline').style('color: var(--text-titles);')
+            ui.link('Courses', '/courses').classes('text-lg mx-4 no-underline').style('color: var(--text-titles);')
             ui.link('Home', '/').classes('text-lg mx-4 no-underline').style('color: white;')
             # ui.link('About', '/about').classes('text-lg mx-4')
             ui.link('Courses', '/courses').classes('text-lg mx-4 no-underline').style('color: white;')
