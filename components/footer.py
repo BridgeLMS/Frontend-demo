@@ -1,6 +1,6 @@
 from nicegui import ui
 
-def footer() -> None:
+def show_footer() -> None:
     """Create the footer component."""
     with ui.element('footer').classes('w-full text-white').style('background-color: #1A2C46'):
         # Main content with padding
@@ -14,9 +14,9 @@ def footer() -> None:
                         ui.input(placeholder='Your Email Address').classes('flex-grow').props('dense').style('background-color: white; border-radius: 0;')
                         ui.button(icon='arrow_forward').props('text-color="black"').style('background-color: #FDB813; border-radius: 0;')
 
-                # Column 2: Company
+                # Column 2: Get In Touch
                 with ui.column():
-                    ui.label('Company').classes('text-lg font-bold').style('font-size: 1.2em; font-weight: 700;')
+                    ui.label('Get In Touch').classes('text-lg font-bold').style('font-size: 1.2em; font-weight: 700;')
                     ui.link('Home', '/').classes('text-white no-underline hover:underline')
                     ui.link('About', '/about').classes('text-white no-underline hover:underline')
                     ui.link('FAQs', '/faq').classes('text-white no-underline hover:underline')
@@ -24,19 +24,19 @@ def footer() -> None:
 
                 # Column 3: Get In Touch
                 with ui.column():
-                    ui.label('Get In Touch').classes('text-lg font-bold').style('font-size: 1.2em; font-weight: 700;')
-                    ui.link('Dashboard', '/dashboard').classes('text-white no-underline hover:underline')
-                    ui.link('Blog', '/blog').classes('text-white no-underline hover:underline')
-                    ui.link('Portfolio', '/portfolio').classes('text-white no-underline hover:underline')
-                    ui.link('Event', '/event').classes('text-white no-underline hover:underline')
+                    ui.label('Links').classes('text-lg font-bold').style('font-size: 1.2em; font-weight: 700;')
+                    ui.link('Learner Dashboard', '/dashboard').classes('text-white no-underline hover:underline')
+                    ui.link('Tutor Daashboard', '/tutor-dashboard').classes('text-white no-underline hover:underline')
+                    ui.link('Courses', '/Courses').classes('text-white no-underline hover:underline')
+                    ui.link('Events', '/event').classes('text-white no-underline hover:underline')
 
-                # Column 4: Courses
+                # Column 4: Categories
                 with ui.column():
-                    ui.label('Courses').classes('text-lg font-bold').style('font-size: 1.2em; font-weight: 700;')
-                    ui.link('Courses', '/courses').classes('text-white no-underline hover:underline')
-                    ui.link('Details', '/details').classes('text-white no-underline hover:underline')
-                    ui.link('Membership', '/membership').classes('text-white no-underline hover:underline')
-                    ui.link('Profile', '/profile').classes('text-white no-underline hover:underline')
+                    ui.label('Categories').classes('text-lg font-bold').style('font-size: 1.2em; font-weight: 700;')
+                    ui.link('Programming', '/Programming').classes('text-white no-underline hover:underline')
+                    ui.link('Web Design', '/Web Design').classes('text-white no-underline hover:underline')
+                    ui.link('Cybersecurity', '/Cybersecurity').classes('text-white no-underline hover:underline')
+                    ui.link('Analytics', '/Analytics').classes('text-white no-underline hover:underline')
 
                 # # Column 5: Our Gallery
                 # with ui.column().classes('md:col-span-2'):

@@ -2,7 +2,8 @@
 # pip install nicegui==1.*
 
 from nicegui import ui
-from components.header import header
+from components.header import show_header
+from utils.auth import clear_session
 
 # ---------- Helpers ----------
 def toggle_theme():
@@ -119,7 +120,7 @@ def dashboard():
         height: 100vh;
     }
     ''')
-    header()
+    show_header()
     with ui.column().classes('app'):
         # Main grid
         with ui.element('main').classes('container'):
@@ -135,7 +136,7 @@ def dashboard():
                     ui.separator().classes('my-4')
                     ui.label('SETTINGS').classes('text-xs font-bold text-gray-500 uppercase tracking-wider px-4')
                     ui.button('Settings', icon='settings').props('flat no-caps')
-                    ui.button('Logout', icon='logout').props('flat color=negative no-caps')
+                    ui.button('Logout', icon='logout', on_click=lambda: (clear_session(), ui.navigate.to('/login'))).props('flat color=negative no-caps')
 
                 # ---------- CENTER COLUMN ----------
                 with ui.column().classes('space-y-6 items-stretch').style('padding-left: 2rem'):

@@ -1,7 +1,7 @@
 from nicegui import ui
 
 
-def header() -> None:
+def show_header() -> None:
     """Create the header component."""
     ui.add_head_html('<link rel="stylesheet" href="/assets/style.css">')
 
