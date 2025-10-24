@@ -1,61 +1,54 @@
 from nicegui import ui
 from utils.auth import api_login, set_session
-# from utils.auth import api_login, api_signup, set_session
-
-# Mock user database
-USERS = {'user@example.com': 'password123', 'admin': 'adminpass'}
+from components.footer import show_footer
+from components.header import show_header
 
 
-def login() -> None:
-    """Create the login page."""
+def login():
+    """Login page for learners and tutors."""
+    show_header()
+    with ui.column().classes('items-center justify-center w-full p-6 flex-grow').style("background-image: url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); background-size: cover; background-position: center;"):
+        with ui.card().classes('w-[500px] max-w-[95%] p-8 shadow-lg rounded-2xl bg-white'):
+            ui.label('Welcome to BridgeLMS').classes('text-3xl font-extrabold text-center mb-2 text-indigo-700')
+            ui.label('Sign in to access your learning or teaching dashboard').classes(
+                'text-base text-center text-gray-600 mb-6'
+            )
 
-    async def handle_login():
-        """Handle the login attempt."""
-        print("handle_login called")
-        success, message, token, user_id, role, name = api_login(
-            username_input.value,
-            password_input.value
-        )
-        if success:
-            set_session(token, role, user_id, name)
-            ui.notify(message, color='positive')
-            if role == 'learner':
-                ui.navigate.to('/learner-dashboard')
-            elif role == 'tutor':
-                ui.navigate.to('/tutor-dashboard')
-            else:
-                ui.navigate.to('/')
-        else:
-            ui.notify(message, color='negative')
+            email = ui.input('Email').props('outlined dense').classes('w-full mb-4')
+            password = ui.input('Password').props('outlined dense type=password').classes('w-full mb-6')
 
-    with ui.column().classes('w-full h-screen flex items-center justify-center bg-gray-100'):
-        with ui.card().classes('w-full max-w-md p-8 rounded-lg shadow-lg'):
-            with ui.column().classes('w-full items-center space-y-4'):
-                ui.label('BridgeLMS').classes(
-                    'text-4xl font-bold text-gray-800')
-                ui.label('Welcome back! Please enter your details.').classes(
-                    'text-gray-600')
+            def on_login():
+                if not email.value or not password.value:
+                    ui.notify('Please fill in both fields', type='warning')
+                    return
 
-                username_input = ui.input(
-                    label='Email or Username',
-                    placeholder='Enter your email or username',
-                ).classes('w-full')
-                password_input = ui.input(
-                    label='Password',
-                    placeholder='Enter your password',
-                    password=True,
-                    password_toggle_button=True,
-                ).classes('w-full')
+                loading = ui.spinner(size='lg').classes('mt-4')
+                try:
+                    success, msg, token, user_id, role, username = api_login(email.value, password.value)
+                    loading.visible = False
 
-                with ui.row().classes('w-full justify-between items-center mt-2'):
-                    ui.checkbox('Remember Me')
-                    ui.link('Forgot Password?', '#').classes(
-                        'text-blue-500 hover:underline')
+                    if not success:
+                        ui.notify(msg, type='negative')
+                        return
 
-                ui.button('Login', on_click=handle_login).classes(
-                    'w-full bg-blue-500 text-white')
+                    set_session(token=token, role=role, user_id=user_id, name=username)
+                    ui.notify('Login successful', type='positive')
 
-                with ui.row().classes('items-center mt-4'):
-                    ui.label('New to BridgeLMS?')
-                    ui.link('Sign up for free', '/signup').classes(
-                        'text-blue-500 font-semibold hover:underline')
+                    if role == 'tutor':
+                        ui.navigate.to('/tutor/dashboard')
+                    elif role == 'learner':
+                        ui.navigate.to('/learner/dashboard')
+                    else:
+                        ui.navigate.to('/')
+                except Exception as e:
+                    loading.visible = False
+                    ui.notify(f'Login failed: {str(e)}', type='negative')
+
+            ui.button('Login', on_click=on_login).classes(
+                'w-full text-white rounded-lg'
+            ).style('background-color: #4f46e5 !important; hover:background-color: #4338ca !important;')
+
+            ui.link('Don’t have an account? Sign up here', '/signup').classes(
+                'block text-center mt-4 text-indigo-700'
+            )
+    show_footer()
