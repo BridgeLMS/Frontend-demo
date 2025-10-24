@@ -3,106 +3,140 @@ from nicegui import app
 import hashlib
 import uuid
 
-USERS_KEY = 'mock_users'
-COURSES_KEY = 'mock_courses'
-#TUTOR'S DASHBOARD_KEY = 'mock_tutor_dashboard'
-
+LEARNERS_KEY = 'mock_learners'
+TUTORS_KEY = 'mock_tutors'
+# COURSES_KEY = 'mock_courses'
 
 
 def _ensure_init():
     store = app.storage.general
-    if USERS_KEY not in store:
-        # seed with a sample vendor and user (password: 123456)
+
+    # Initialize mock learners and tutors if they don't exist
+    if LEARNERS_KEY not in store or TUTORS_KEY not in store:
         pwd = hashlib.sha256('123456'.encode()).hexdigest()
-        store[USERS_KEY] = [
-            {'id': 'v1', 'name': 'Demo Vendor', 'email': 'vendor@example.com', 'password': pwd, 'role': 'vendor'},
-            {'id': 'u1', 'name': 'Demo User', 'email': 'user@example.com', 'password': pwd, 'role': 'user'},
+
+        store[LEARNERS_KEY] = [
+            {
+                'id': 'l1',
+                'name': 'Demo Learner',
+                'email': 'learner@example.com',
+                'password': pwd,
+                'role': 'learner',
+                'phone': '+233540000001',
+                'bio': 'A sample learner exploring online courses.'
+            }
         ]
-    if ADVERTS_KEY not in store:
-        store[ADVERTS_KEY] = [
-            {'id': 'a1', 'name': 'Spicy Jollof', 'description': 'Delicious Ghanaian jollof', 'price': 50, 'owner_id': 'v1', 'image': ''},
-            {'id': 'a2', 'name': 'Waakye Special', 'description': 'Beans and rice combo', 'price': 35, 'owner_id': 'v1', 'image': ''},
+
+        store[TUTORS_KEY] = [
+            {
+                'id': 't1',
+                'name': 'Demo Tutor',
+                'email': 'tutor@example.com',
+                'password': pwd,
+                'role': 'tutor',
+                'phone': '+233540000002',
+                'bio': 'A professional tutor specializing in Python programming.'
+            }
         ]
+
+    # Seed example courses
+    # if COURSES_KEY not in store:
+    #     store[COURSES_KEY] = [
+    #         {
+    #             'id': 'c1',
+    #             'title': 'Introduction to Web Development',
+    #             'description': 'Learn HTML, CSS, and JavaScript from scratch.',
+    #             'tutor_id': 't1',
+    #             'price': 120.00,
+    #             'enrolled_learners': [],
+    #             'image': ''
+    #         },
+    #         {
+    #             'id': 'c2',
+    #             'title': 'Data Analysis with Python',
+    #             'description': 'A hands-on course for data cleaning, analysis, and visualization.',
+    #             'tutor_id': 't1',
+    #             'price': 150.00,
+    #             'enrolled_learners': [],
+    #             'image': ''
+    #         },
+    #     ]
 
 
 def hash_password(password: str) -> str:
     return hashlib.sha256(password.encode()).hexdigest()
 
 
-# Users
+# -------------------- USERS --------------------
 
-def create_user(name: str, email: str, password: str, role: str) -> Dict[str, Any]:
+def create_user(name: str, email: str, password: str, role: str, phone: str, bio: str) -> Dict[str, Any]:
+    """Register a new learner or tutor."""
     _ensure_init()
-    users: List[Dict[str, Any]] = app.storage.general[USERS_KEY]
+
+    key = LEARNERS_KEY if role == 'learner' else TUTORS_KEY
+    users: List[Dict[str, Any]] = app.storage.general[key]
+
     if any(u['email'].lower() == email.lower() for u in users):
         raise ValueError('Email already registered')
+
     new_user = {
         'id': str(uuid.uuid4()),
         'name': name,
         'email': email,
         'password': hash_password(password),
         'role': role,
+        'phone': phone,
+        'bio': bio,
     }
+
     users.append(new_user)
-    app.storage.general[USERS_KEY] = users
+    app.storage.general[key] = users
     return new_user
 
 
 def authenticate_user(email: str, password: str) -> Optional[Dict[str, Any]]:
+    """Authenticate either a learner or a tutor."""
     _ensure_init()
-    users: List[Dict[str, Any]] = app.storage.general[USERS_KEY]
     h = hash_password(password)
-    for u in users:
-        if u['email'].lower() == email.lower() and u['password'] == h:
-            return u
+
+    for key in [LEARNERS_KEY, TUTORS_KEY]:
+        users: List[Dict[str, Any]] = app.storage.general[key]
+        for u in users:
+            if u['email'].lower() == email.lower() and u['password'] == h:
+                return u
     return None
 
 
-# Adverts
+# # -------------------- COURSES --------------------
 
-def list_adverts() -> List[Dict[str, Any]]:
-    _ensure_init()
-    return list(app.storage.general[ADVERTS_KEY])
-
-
-def get_advert(advert_id: str) -> Optional[Dict[str, Any]]:
-    _ensure_init()
-    for a in app.storage.general[ADVERTS_KEY]:
-        if str(a['id']) == str(advert_id):
-            return a
-    return None
+# def list_courses() -> List[Dict[str, Any]]:
+#     """Return all available courses."""
+#     _ensure_init()
+#     return list(app.storage.general[COURSES_KEY])
 
 
-def create_advert(name: str, description: str, price: float, owner_id: str, image: str = '') -> Dict[str, Any]:
-    _ensure_init()
-    adverts: List[Dict[str, Any]] = app.storage.general[ADVERTS_KEY]
-    new_ad = {
-        'id': str(uuid.uuid4()),
-        'name': name,
-        'description': description,
-        'price': price,
-        'owner_id': owner_id,
-        'image': image,
-    }
-    adverts.append(new_ad)
-    app.storage.general[ADVERTS_KEY] = adverts
-    return new_ad
+# def get_course(course_id: str) -> Optional[Dict[str, Any]]:
+#     """Retrieve a single course by its ID."""
+#     _ensure_init()
+#     for course in app.storage.general[COURSES_KEY]:
+#         if str(course['id']) == str(course_id):
+#             return course
+#     return None
 
 
-def update_advert(advert_id: str, name: str, description: str, price: float) -> Dict[str, Any]:
-    _ensure_init()
-    adverts: List[Dict[str, Any]] = app.storage.general[ADVERTS_KEY]
-    for a in adverts:
-        if str(a['id']) == str(advert_id):
-            a['name'] = name
-            a['description'] = description
-            a['price'] = price
-            app.storage.general[ADVERTS_KEY] = adverts
-            return a
-    raise KeyError('Advert not found')
+# def create_course(title: str, description: str, tutor_id: str, price: float, image: str = '') -> Dict[str, Any]:
+#     """Create a new course by a tutor."""
+#     _ensure_init()
+#     courses: List[Dict[str, Any]] = app.storage.general[COURSES_KEY]
 
+#     new_course = {
+#         'id': str(uuid.uuid4()),
+#         'title': title,
+#         'description': description,
+#         'tutor_id': tutor_id,
+#         'price': price,
+#         'enrolled_learners': [],
+#         'image': image,
+#     }
 
-def delete_advert(advert_id: str) -> None:
-    _ensure_init()
-    adverts: List[Dict[str, Any]] = app.storage.general[ADVERTS_KEY]
-    app.storage.general[ADVERTS_KEY] = [a for a in adverts if str(a['id']) != str(advert_id)]
+   
