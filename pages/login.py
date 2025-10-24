@@ -1,4 +1,6 @@
 from nicegui import ui
+from utils.auth import api_login, set_session
+# from utils.auth import api_login, api_signup, set_session
 
 # Mock user database
 USERS = {'user@example.com': 'password123', 'admin': 'adminpass'}
@@ -20,8 +22,10 @@ def login() -> None:
     with ui.column().classes('w-full h-screen flex items-center justify-center bg-gray-100'):
         with ui.card().classes('w-full max-w-md p-8 rounded-lg shadow-lg'):
             with ui.column().classes('w-full items-center space-y-4'):
-                ui.label('BridgeLMS').classes('text-4xl font-bold text-gray-800')
-                ui.label('Welcome back! Please enter your details.').classes('text-gray-600')
+                ui.label('BridgeLMS').classes(
+                    'text-4xl font-bold text-gray-800')
+                ui.label('Welcome back! Please enter your details.').classes(
+                    'text-gray-600')
 
                 username_input = ui.input(
                     label='Email or Username',
@@ -36,10 +40,13 @@ def login() -> None:
 
                 with ui.row().classes('w-full justify-between items-center mt-2'):
                     ui.checkbox('Remember Me')
-                    ui.link('Forgot Password?', '#').classes('text-blue-500 hover:underline')
+                    ui.link('Forgot Password?', '#').classes(
+                        'text-blue-500 hover:underline')
 
-                ui.button('Login', on_click=handle_login).classes('w-full bg-blue-500 text-white')
+                ui.button('Login', on_click=handle_login).classes(
+                    'w-full bg-blue-500 text-white')
 
                 with ui.row().classes('items-center mt-4'):
                     ui.label('New to BridgeLMS?')
-                    ui.link('Sign up for free', '/signup').classes('text-blue-500 font-semibold hover:underline')
+                    ui.link('Sign up for free', '/signup').classes(
+                        'text-blue-500 font-semibold hover:underline')
