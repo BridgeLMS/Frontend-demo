@@ -36,44 +36,45 @@ def courses() -> None:
             'image_url': 'https://hub.aipm.com.au/images/Events/Project%20Management%20Fundamentals%20Course4.jpg', 'category': 'Business', 'status': 'Active', 'tutor': 'Ms. Rossi', 'popularity': 8, 'date_added': '2023-09-01'},
     ]
 
-    filters: Dict[str, Any] = {
-        'category': 'All',
-        'status': 'All',
-        'tutor': 'All',
-        'sort': 'Relevance',
-        'search': '',
-    }
+    # filters: Dict[str, Any] = {
+    #     'category': 'All',
+    #     'status': 'All',
+    #     'tutor': 'All',
+    #     'sort': 'Relevance',
+    #     'search': '',
+    # }
 
     def update_courses():
         course_grid.clear()
         with course_grid:
             filtered_courses = all_courses
-            if filters['search']:
-                filtered_courses = [
-                    c for c in filtered_courses if filters['search'].lower() in c['title'].lower()]
-            if filters['category'] != 'All':
-                filtered_courses = [
-                    c for c in filtered_courses if c['category'] == filters['category']]
-            if filters['status'] != 'All':
-                filtered_courses = [
-                    c for c in filtered_courses if c['status'] == filters['status']]
-            if filters['tutor'] != 'All':
-                filtered_courses = [
-                    c for c in filtered_courses if c['tutor'] == filters['tutor']]
+            # if filters['search']:
+            #     filtered_courses = [
+            #         c for c in filtered_courses if filters['search'].lower() in c['title'].lower()]
+            # if filters['category'] != 'All':
+            #     filtered_courses = [
+            #         c for c in filtered_courses if c['category'] == filters['category']]
+            # if filters['status'] != 'All':
+            #     filtered_courses = [
+            #         c for c in filtered_courses if c['status'] == filters['status']]
+            # if filters['tutor'] != 'All':
+            #     filtered_courses = [
+            #         c for c in filtered_courses if c['tutor'] == filters['tutor']]
 
-            if filters['sort'] == 'Popularity':
-                filtered_courses = sorted(
-                    filtered_courses, key=lambda c: c.get('popularity', 0), reverse=True)
-            elif filters['sort'] == 'Newest':
-                filtered_courses = sorted(
-                    filtered_courses, key=lambda c: c.get('date_added', ''), reverse=True)
+            # if filters['sort'] == 'Popularity':
+            #     filtered_courses = sorted(
+            #         filtered_courses, key=lambda c: c.get('popularity', 0), reverse=True)
+            # elif filters['sort'] == 'Newest':
+            #     filtered_courses = sorted(
+            #         filtered_courses, key=lambda c: c.get('date_added', ''), reverse=True)
 
             for course in filtered_courses:
                 with ui.card().classes('text-left transition hover:scale-105 hover:shadow-lg duration-300'):
                     ui.image(course['image_url']).classes(
                         'w-full h-48 object-cover rounded-t-lg')
                     with ui.card_section():
-                        ui.label(course['title']).classes('text-lg font-bold')
+                        ui.label(course['title']).classes(
+                            'text-lg font-bold text-gray-800')
                         ui.label(course['desc']).classes('text-gray-600 mt-2')
 
     # Hero Section
@@ -83,14 +84,14 @@ def courses() -> None:
 
     # Featured Courses Section
     with ui.column().classes('w-full items-center py-16').style('background: linear-gradient(to bottom, #002a47, #00426a);'):
-    with ui.column().classes('w-full items-center gap-8'):
+     with ui.column().classes('w-full items-center gap-8'):
         # Welcome/Header section
         with ui.element('div').classes('banner'):
          with ui.column().classes('w-full items-center'):
             
-            ui.label('Welcome to BridgeLMS course panel !').classes(
-                'text-small background italic text-white')
-            ui.label('Explore Our Courses').classes('text-4xl font-bold text-white')
+            # ui.label('Welcome to BridgeLMS course panel !').classes(
+            #     'text-small background italic text-white')
+            # ui.label('Explore Our Courses').classes('text-4xl font-bold text-white')
             ui.label(
                 'Find the perfect course to advance your skills and knowledge.'
             ).classes('text-lg mt-2 text-white')
@@ -113,22 +114,22 @@ def courses() -> None:
                     'background-color: var(--primary-brand); color: white;')
 
         # Filter section
-        with ui.column().classes('w-full max-w-6xl px-4 filter-section'):
-            ui.label('Filter Courses').classes('text-3xl font-bold mb-4 text-white')
-            with ui.row().classes('w-full gap-4 items-center'):
-                search_input = ui.input(placeholder='Search for courses...').classes(
-                    'flex-1').on('keydown.enter', lambda: filters.update({'search': search_input.value}) or update_courses())
-                ui.button('Search', on_click=lambda: filters.update(
-                    {'search': search_input.value}) or update_courses())
-            with ui.row().classes('w-full gap-4 mt-4'):
-                ui.select(['All', 'Web Development', 'Data Science', 'Marketing', 'Business', 'Design'],
-                          label='Category', on_change=lambda e: filters.update({'category': e.value}) or update_courses()).classes('flex-1')
-                ui.select(['All', 'Active', 'Completed'], label='Status', on_change=lambda e: filters.update(
-                    {'status': e.value}) or update_courses()).classes('flex-1')
-                ui.select(['All', 'Dr. Reed', 'Ms. Rossi'], label='Tutor', on_change=lambda e: filters.update(
-                    {'tutor': e.value}) or update_courses()).classes('flex-1')
-                ui.select(['Relevance', 'Popularity', 'Newest'], label='Sort', on_change=lambda e: filters.update(
-                    {'sort': e.value}) or update_courses()).classes('flex-1')
+        # with ui.column().classes('w-full max-w-6xl px-4 filter-section'):
+        #     ui.label('Filter Courses').classes('text-3xl font-bold mb-4 text-white')
+        #     with ui.row().classes('w-full gap-4 items-center'):
+        #         search_input = ui.input(placeholder='Search for courses...').classes(
+        #             'flex-1').on('keydown.enter', lambda: filters.update({'search': search_input.value}) or update_courses())
+        #         ui.button('Search', on_click=lambda: filters.update(
+        #             {'search': search_input.value}) or update_courses())
+        #     with ui.row().classes('w-full gap-4 mt-4'):
+        #         ui.select(['All', 'Web Development', 'Data Science', 'Marketing', 'Business', 'Design'],
+        #                   label='Category', on_change=lambda e: filters.update({'category': e.value}) or update_courses()).classes('flex-1')
+        #         ui.select(['All', 'Active', 'Completed'], label='Status', on_change=lambda e: filters.update(
+        #             {'status': e.value}) or update_courses()).classes('flex-1')
+        #         ui.select(['All', 'Dr. Reed', 'Ms. Rossi'], label='Tutor', on_change=lambda e: filters.update(
+        #             {'tutor': e.value}) or update_courses()).classes('flex-1')
+        #         ui.select(['Relevance', 'Popularity', 'Newest'], label='Sort', on_change=lambda e: filters.update(
+        #             {'sort': e.value}) or update_courses()).classes('flex-1')
 
         # Featured Courses Section
         with ui.column().classes('w-full max-w-6xl px-4'):
@@ -158,7 +159,8 @@ def courses() -> None:
                         ui.image(image_url).classes(
                             'w-full h-48 object-cover rounded-t-lg')
                         with ui.card_section():
-                            ui.label(title).classes('text-xl font-bold')
+                            ui.label(title).classes(
+                                'text-xl font-bold text-gray-800')
                             ui.label(desc).classes('text-gray-600 mt-2')
 
     # All Courses Section

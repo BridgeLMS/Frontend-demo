@@ -9,6 +9,9 @@ from pages.calendar import calendar_page
 from pages.login import login
 from pages.tutor_dashboard import tutor_dashboard
 from pages.signup import signup
+from pages.create_course import create_course_page
+from pages.mailbox import mailbox_page
+from pages.calendar import calendar_page
 # aboutfrom pages.about import about
 
 # Force reload
@@ -93,11 +96,28 @@ def signup_page():
     signup()
 
 
-@ui.page('/inbox')
-def inbox_page():
-    """Inbox page layout."""
-    from pages.inbox import mailbox_page
+@ui.page('/mailbox')
+def mailbox():
+    """Mailbox page layout."""
+    main_layout()
     mailbox_page()
+    show_footer()
+
+
+@ui.page('/calendar')
+def calendar():
+    """Calendar page layout."""
+    main_layout()
+    calendar_page()
+    show_footer()
+
+
+@ui.page('/create_course')
+def create_course():
+    """Create course page layout."""
+    main_layout()
+    create_course_page()
+    show_footer()
 # @ui.page('/about')
 # def about_page():
 #     """About page layout."""
