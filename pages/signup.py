@@ -17,7 +17,7 @@ def signup():
             username = ui.input('Username').props('outlined dense').classes('w-full mb-4')
             email = ui.input('Email').props('outlined dense type=email').classes('w-full mb-4')
             password = ui.input('Password').props('outlined dense type=password').classes('w-full mb-4')
-            role = ui.select(['learner', 'tuber'], value='learner', label='Role').props('outlined dense').classes('w-full mb-4')
+            role = ui.select(['learner', 'tutor'], value='learner', label='Role').props('outlined dense').classes('w-full mb-4')
             phone = ui.input('Phone Number').props('outlined dense type=tel').classes('w-full mb-4')
             bio = ui.textarea('Short Bio').props('outlined dense autogrow').classes('w-full mb-6')
 
