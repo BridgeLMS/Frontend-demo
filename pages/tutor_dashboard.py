@@ -1,5 +1,6 @@
 from nicegui import ui
 from components.header import show_header as app_header
+from components.footer import show_footer
 
 
 def tutor_dashboard() -> None:
@@ -154,3 +155,4 @@ def tutor_dashboard() -> None:
                             ui.input(placeholder='Course Title').classes('w-full')
                             ui.textarea(placeholder='Short Description...').classes('w-full')
                             ui.button('Post Course', on_click=lambda: ui.notify('Course Created!')).classes('w-full mt-4 bg-brand text-white')
+        show_footer()
