@@ -34,12 +34,14 @@ def login():
                     set_session(token=token, role=role, user_id=user_id, name=username)
                     ui.notify('Login successful', type='positive')
 
+                    # Redirect to learner dashboard or tutor dashboard based on user's role
                     if role == 'tutor':
                         ui.navigate.to('/tutor/dashboard')
                     elif role == 'learner':
                         ui.navigate.to('/learner/dashboard')
                     else:
                         ui.navigate.to('/')
+
                 except Exception as e:
                     loading.visible = False
                     ui.notify(f'Login failed: {str(e)}', type='negative')

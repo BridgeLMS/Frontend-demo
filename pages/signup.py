@@ -17,7 +17,7 @@ def signup():
             username = ui.input('Username').props('outlined dense').classes('w-full mb-4')
             email = ui.input('Email').props('outlined dense type=email').classes('w-full mb-4')
             password = ui.input('Password').props('outlined dense type=password').classes('w-full mb-4')
-            role = ui.select(['learner', 'tuber'], value='learner', label='Role').props('outlined dense').classes('w-full mb-4')
+            role = ui.select(['Learner', 'Tutor'], value='learner', label='Role').props('outlined dense').classes('w-full mb-4')
             phone = ui.input('Phone Number').props('outlined dense type=tel').classes('w-full mb-4')
             bio = ui.textarea('Short Bio').props('outlined dense autogrow').classes('w-full mb-6')
 
@@ -40,10 +40,8 @@ def signup():
                     set_session(token=token, role=role.value, user_id=user_id, name=username.value)
                     ui.notify('Account created successfully!', type='positive')
 
-                    if role.value == 'tutor':
-                        ui.navigate.to('/tutor/dashboard')
-                    else:
-                        ui.navigate.to('/learner/dashboard')
+                    # Redirect to login page
+                    ui.navigate.to('/login')
                 except Exception as e:
                     loading.visible = False
                     ui.notify(f'Signup failed: {str(e)}', type='negative')
