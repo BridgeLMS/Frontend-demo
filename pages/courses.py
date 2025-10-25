@@ -76,6 +76,13 @@ def courses() -> None:
                         ui.label(course['title']).classes('text-lg font-bold')
                         ui.label(course['desc']).classes('text-gray-600 mt-2')
 
+    # Hero Section
+    with ui.row().classes('w-full h-[30vh] bg-cover bg-center relative').style('background-image: url("/assets/Images/courses.jpg")'):
+        with ui.column().classes('absolute-full flex flex-center justify-center').style('background-color: rgba(4, 2, 4, 0.6)'):
+            ui.label('Our Courses').classes('text-5xl font-bold text-white')
+
+    # Featured Courses Section
+    with ui.column().classes('w-full items-center py-16').style('background: linear-gradient(to bottom, #002a47, #00426a);'):
     with ui.column().classes('w-full items-center gap-8'):
         # Welcome/Header section
         with ui.element('div').classes('banner'):
@@ -154,7 +161,8 @@ def courses() -> None:
                             ui.label(title).classes('text-xl font-bold')
                             ui.label(desc).classes('text-gray-600 mt-2')
 
-        # All Courses Section
+    # All Courses Section
+    with ui.column().classes('w-full items-center py-16').style('background: linear-gradient(to bottom, #00426a, #005f98);'):
         with ui.column().classes('w-full max-w-6xl px-4'):
             ui.label('All Courses').classes(
                 'text-4xl font-bold text-white')

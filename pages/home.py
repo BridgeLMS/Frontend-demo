@@ -6,33 +6,32 @@ def home() -> None:
     ui.add_css('''
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
     ''')
+    # Hero Section
+    with ui.row().classes(
+        'w-full h-screen bg-cover bg-center flex items-center justify-center'
+    ).style(
+        'background-image: url("/assets/Images/BridgeTeam.jpeg")'
+    ):
+        with ui.column().classes('w-full h-full flex flex-col items-center justify-center').style("background-color: rgba(0, 0, 0, 0.5); color: white; font-family: 'Montserrat', Times New Roman;"):
+            ui.label('Welcome to BridgeLMS!').classes('text-3xl font-bold text-white')
+            with ui.column().classes('items-center gap-0'):
+                ui.label('Bridging Gaps, Building Futures').classes(
+                    'text-4xl font-bold'
+                ).style('color: #32b0ff')
+                ui.label(
+                    'BridgeLMS is your all-in-one platform for seamless learning and teaching.'
+                ).classes('text-base text-center text-white italic')
+            with ui.row().classes('mt-2'):
+                ui.button(
+                    "Learner Login",
+                    on_click=lambda: ui.navigate.to('/login'),
+                ).classes('m-2').style('background: linear-gradient(to right, #00426a, #1A2C46); color: white; border: none;')
+                ui.button(
+                    "Tutor Login", on_click=lambda: ui.navigate.to('/login')
+                ).classes('m-2').style('background-color: var(--primary-brand); color: white;')
+
+    # Other sections
     with ui.column().classes('w-full items-center'):
-        # Hero Section
-        with ui.row().classes(
-            'w-full h-[70vh] bg-cover bg-center flex items-center justify-center'
-        ).style(
-            'background-image: url("assets/Images/BridgeTeam.jpeg" )'
-        ):
-            
-            
-            with ui.column().classes('items-center px-16 py-1 rounded-xl w-full max-w-3xl mx-auto mt-64').style("font-family: 'Montserrat', Times New Roman; background: linear-gradient(to right, #00426a, #1A2C46); color: white;"):
-                ui.label('Welcome to BridgeLMS!').classes('text-3xl font-bold text-white')
-                with ui.column().classes('items-center gap-0'):
-                    ui.label('Bridging Gaps, Building Futures').classes(
-                        'text-4xl font-bold'
-                    ).style('color: #32b0ff')
-                    ui.label(
-                        'BridgeLMS is your all-in-one platform for seamless learning and teaching.'
-                    ).classes('text-base text-center text-white italic')
-                with ui.row().classes('mt-2'):
-                    
-                    ui.button(
-                        "Learner Login",
-                        on_click=lambda: ui.navigate.to('/login'),
-                    ).classes('m-2').style('background: linear-gradient(to right, #00426a, #1A2C46); color: white; border: none;')
-                    ui.button(
-                        "Tutor Login", on_click=lambda: ui.navigate.to('/login')
-                    ).classes('m-2').style('background-color: var(--primary-brand); color: white;')
         # Why BridgeLMS? Section
         with ui.column().classes('w-full items-center my-16 p-16').style('background: linear-gradient(to bottom, #002a47, #00426a);'):
             ui.label('Why BridgeLMS?').classes('text-4xl font-bold text-white')
@@ -89,10 +88,10 @@ def home() -> None:
                         'Monitor your attendance, grades, and overall progress with our intuitive dashboard.',
                     ),
                 ]:
-                    with ui.card().classes('items-center text-center p-8').style('background-color: #002a47;'):
-                        ui.icon(icon).classes('text-5xl').style('color: var(--primary-brand)')
-                        ui.label(title).classes('text-2xl font-bold mt-4 text-white')
-                        ui.label(desc).classes('mt-2 text-white')
+                    with ui.card().classes('items-center text-center p-8').style('background-color: white;'):
+                        ui.icon(icon).classes('text-5xl').style('color: #32b0ff')
+                        ui.label(title).classes('text-2xl font-bold mt-4 text-black')
+                        ui.label(desc).classes('mt-2 text-black')
 
         # # Community & Trust Section
         # with ui.column().classes('w-full items-center my-16 p-16').style('background-color: var(--background-light)'):
