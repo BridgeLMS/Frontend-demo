@@ -4,6 +4,14 @@ from components.footer import show_footer
 
 def dashboard() -> None:
     """Create the learner dashboard page."""
+    async def logout():
+        with ui.dialog() as dialog, ui.card():
+            ui.label('Are you sure you want to log out?')
+            with ui.row():
+                ui.button('Yes', on_click=lambda: (dialog.close(), ui.navigate.to('/login')))
+                ui.button('No', on_click=dialog.close)
+        await dialog
+
     app_header()
     ui.add_head_html('<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">')
     ui.add_css('''
@@ -51,11 +59,13 @@ def dashboard() -> None:
     with ui.element('div').classes('grid p-8'):
         # ---------- LEFT SIDEBAR ----------
         with ui.column().classes('sidebar space-y-2'):
-            ui.button('Dashboard', icon='dashboard', on_click=lambda: ui.navigate.to('/')).props('flat no-caps')
+            ui.button('Dashboard', icon='house', on_click=lambda: ui.navigate.to('/')).props('flat no-caps')
             ui.button('My Courses', icon='book', on_click=lambda: ui.navigate.to('/courses')).props('flat no-caps')
             ui.button('Mailbox', icon='mail', on_click=lambda: ui.navigate.to('/mailbox')).props('flat no-caps')
             ui.button('Calendar', icon='calendar_today', on_click=lambda: ui.navigate.to('/calendar')).props('flat no-caps')
             ui.button('My Profile', icon='person').props('flat no-caps')
+            ui.button('Logout', icon='logout', on_click=logout).props('flat color=negative no-caps')
+
 
         # ---------- MAIN CONTENT ----------
         with ui.column().classes('space-y-6'):

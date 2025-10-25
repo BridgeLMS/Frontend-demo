@@ -5,6 +5,14 @@ from components.footer import show_footer
 
 def tutor_dashboard() -> None:
     """Create the tutor dashboard page."""
+    async def logout():
+        with ui.dialog() as dialog, ui.card():
+            ui.label('Are you sure you want to log out?')
+            with ui.row():
+                ui.button('Yes', on_click=lambda: (dialog.close(), ui.navigate.to('/login')))
+                ui.button('No', on_click=dialog.close)
+        await dialog
+
     app_header()
     ui.add_head_html('<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">')
     ui.add_css('''
@@ -52,7 +60,7 @@ def tutor_dashboard() -> None:
     with ui.element('div').classes('grid p-8'):
         # ---------- LEFT SIDEBAR ----------
         with ui.column().classes('sidebar space-y-2'):
-            ui.button('Dashboard', icon='dashboard', on_click=lambda: ui.navigate.to('/')).props('flat no-caps')
+            ui.button('Home', icon='house', on_click=lambda: ui.navigate.to('/')).props('flat no-caps')
             ui.button('Courses', icon='book', on_click=lambda: ui.navigate.to('/create_course')).props('flat no-caps')
             ui.button('Mailbox', icon='mail', on_click=lambda: ui.navigate.to('/mailbox')).props('flat no-caps')
             ui.button('Calendar', icon='calendar_today', on_click=lambda: ui.navigate.to('/calendar')).props('flat no-caps')
@@ -60,6 +68,8 @@ def tutor_dashboard() -> None:
             # ui.button('Review', icon='reviews').props('flat no-caps')
             # ui.button('Add Listing', icon='add').props('flat no-caps')
             ui.button('My Profile', icon='person').props('flat no-caps')
+            ui.button('Logout', icon='logout', on_click=logout).props('flat color=negative no-caps')
+
 
         # ---------- MAIN CONTENT ----------
         with ui.column().classes('space-y-6'):
@@ -111,7 +121,7 @@ def tutor_dashboard() -> None:
 
                         # Bottom part: Description and Buttons
                         ui.label('Course Description').classes('text-lg font-bold mt-6 mb-2')
-                        ui.label('Lorem ipsum dolor sit amet, est ei idque voluptua copiosae, pro detracto disputando reformidans at, ex vel suas eripuit. Vel alii zril maiorum ex, mea id sale eirmod epicurei. Sit te possit senserit, eam alia veritus maluisset ei, id cibo vocent ocurreret per. Te qui doming doctus referrentur, usu debet tamquam et. Sea ut nullam aperiam, mei cu tollit salutatus delicatissimi.').classes('text-sm text-gray-600')
+                        ui.label('Learn PHP to build dynamic, high-earning web applications — from freelance websites to e-commerce platforms and content management systems.').classes('text-sm text-gray-600')
 
                         with ui.row().classes('w-full gap-4 mt-8'):
                             ui.button('Approve', color='teal').props('outline rounded').classes('border-2')
