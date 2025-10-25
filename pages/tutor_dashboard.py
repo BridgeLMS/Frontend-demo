@@ -1,5 +1,5 @@
 from nicegui import ui
-from components.header import show_header as app_header
+from components.header import header as app_header
 
 
 def tutor_dashboard() -> None:

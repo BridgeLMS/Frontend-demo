@@ -2,7 +2,7 @@
 # pip install nicegui==1.*
 
 from nicegui import ui
-from components.header import show_header
+from components.header import header
 from utils.auth import clear_session
 
 # ---------- Helpers ----------
@@ -120,7 +120,7 @@ def dashboard():
         height: 100vh;
     }
     ''')
-    show_header()
+    header()
     with ui.column().classes('app'):
         # Main grid
         with ui.element('main').classes('container'):

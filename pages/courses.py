@@ -8,16 +8,6 @@ def courses() -> None:
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
     body {
         font-family: 'Montserrat', Times New Roman, serif;
-        background: linear-gradient(to right, #a8c0ff, #3f2b96);
-        color: white;
-    }
-    .filter-section .q-field__label,
-    .filter-section .q-field__native,
-    .filter-section .q-select__dropdown-icon {
-        color: white !important;
-    }
-    .filter-section .q-field__native::placeholder {
-        color: #eee !important;
     }
     ''')
     
@@ -83,54 +73,6 @@ def courses() -> None:
 
     # Featured Courses Section
     with ui.column().classes('w-full items-center py-16').style('background: linear-gradient(to bottom, #002a47, #00426a);'):
-    with ui.column().classes('w-full items-center gap-8'):
-        # Welcome/Header section
-        with ui.element('div').classes('banner'):
-         with ui.column().classes('w-full items-center'):
-            
-            ui.label('Welcome to BridgeLMS course panel !').classes(
-                'text-small background italic text-white')
-            ui.label('Explore Our Courses').classes('text-4xl font-bold text-white')
-            ui.label(
-                'Find the perfect course to advance your skills and knowledge.'
-            ).classes('text-lg mt-2 text-white')
-            with ui.row().classes('mt-8 items-center justify-center'):
-                ui.button('All Categories', on_click=lambda: ui.notify('All')).style(
-                    'background-color: var(--primary-brand); color: white;')
-                ui.link(
-                    'Cybersecurity',
-                    'https://www.eccouncil.org/cybersecurity-exchange/cyber-novice/free-cybersecurity-courses-beginners/',
-                    new_tab=True
-                ).classes('q-btn').style('background-color: var(--primary-brand); color: white; text-decoration: none;')
-                ui.button(
-                    'Web Development',
-                    on_click=lambda: ui.notify('Web Development'),
-                ).style('background-color: var(--primary-brand); color: white;')
-                ui.button(
-                    'Data Science', on_click=lambda: ui.notify('Data Science')
-                ).style('background-color: var(--primary-brand); color: white;')
-                ui.button('Marketing', on_click=lambda: ui.notify('Marketing')).style(
-                    'background-color: var(--primary-brand); color: white;')
-
-        # Filter section
-        with ui.column().classes('w-full max-w-6xl px-4 filter-section'):
-            ui.label('Filter Courses').classes('text-3xl font-bold mb-4 text-white')
-            with ui.row().classes('w-full gap-4 items-center'):
-                search_input = ui.input(placeholder='Search for courses...').classes(
-                    'flex-1').on('keydown.enter', lambda: filters.update({'search': search_input.value}) or update_courses())
-                ui.button('Search', on_click=lambda: filters.update(
-                    {'search': search_input.value}) or update_courses())
-            with ui.row().classes('w-full gap-4 mt-4'):
-                ui.select(['All', 'Web Development', 'Data Science', 'Marketing', 'Business', 'Design'],
-                          label='Category', on_change=lambda e: filters.update({'category': e.value}) or update_courses()).classes('flex-1')
-                ui.select(['All', 'Active', 'Completed'], label='Status', on_change=lambda e: filters.update(
-                    {'status': e.value}) or update_courses()).classes('flex-1')
-                ui.select(['All', 'Dr. Reed', 'Ms. Rossi'], label='Tutor', on_change=lambda e: filters.update(
-                    {'tutor': e.value}) or update_courses()).classes('flex-1')
-                ui.select(['Relevance', 'Popularity', 'Newest'], label='Sort', on_change=lambda e: filters.update(
-                    {'sort': e.value}) or update_courses()).classes('flex-1')
-
-        # Featured Courses Section
         with ui.column().classes('w-full max-w-6xl px-4'):
             ui.label('Featured Courses').classes(
                 'text-4xl font-bold text-white')
@@ -149,7 +91,7 @@ def courses() -> None:
                     (
                         'Creative Writing Workshop',
                         'Unleash your inner writer and craft compelling stories.',
-                        'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=800&q=80',
+                        'https://images.unsplash.com/photo-1524995997946-a1c2e-315a42f?auto=format&fit=crop&w=800&q=80',
                     ),
                 ]
 

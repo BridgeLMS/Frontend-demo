@@ -1,12 +1,12 @@
 from nicegui import ui
 from utils.auth import api_login, set_session
-from components.footer import show_footer
-from components.header import show_header
+from components.footer import footer
+from components.header import header
 
 
 def login():
     """Login page for learners and tutors."""
-    show_header()
+    header()
     with ui.column().classes('items-center justify-center w-full p-6 flex-grow').style("background-image: url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); background-size: cover; background-position: center;"):
         with ui.card().classes('w-[500px] max-w-[95%] p-8 shadow-lg rounded-2xl bg-white'):
             ui.label('Welcome to BridgeLMS').classes('text-3xl font-extrabold text-center mb-2 text-indigo-700')
@@ -51,4 +51,4 @@ def login():
             ui.link('Don’t have an account? Sign up here', '/signup').classes(
                 'block text-center mt-4 text-indigo-700'
             )
-    show_footer()
+    footer()
