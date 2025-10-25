@@ -92,6 +92,13 @@ def courses() -> None:
             # ui.label('Welcome to BridgeLMS course panel !').classes(
             #     'text-small background italic text-white')
             # ui.label('Explore Our Courses').classes('text-4xl font-bold text-white')
+        with ui.column().classes('w-full items-center gap-8'):
+            # Welcome/Header section
+            with ui.element('div').classes('banner'):
+                with ui.column().classes('w-full items-center'):
+                    ui.label('Welcome to BridgeLMS course panel !').classes(
+                        'text-small background italic text-white')
+            ui.label('Explore Our Courses').classes('text-4xl font-bold text-white')
             ui.label(
                 'Find the perfect course to advance your skills and knowledge.'
             ).classes('text-lg mt-2 text-white')
