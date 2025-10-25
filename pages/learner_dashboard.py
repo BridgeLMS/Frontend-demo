@@ -2,7 +2,8 @@
 # pip install nicegui==1.*
 
 from nicegui import ui
-from components.header import header
+from components.header import show_header
+from utils.auth import clear_session
 
 # ---------- Helpers ----------
 def toggle_theme():
@@ -16,13 +17,13 @@ def course_chip(title: str, teacher: str, avatar_url: str):
             ui.label(teacher).classes('tiny')
 
 def mentor_row(name: str, topic: str, avatar_url: str):
-    with ui.row().classes('kv'):
-        with ui.row().classes('items-center').style('gap:10px'):
-            ui.image(avatar_url).style('width:36px;height:36px;border-radius:50%;object-fit:cover')
+    with ui.row().classes('w-full items-center justify-between'):
+        with ui.row().classes('items-center gap-4'):
+            ui.image(avatar_url).classes('w-10 h-10 rounded-full object-cover')
             with ui.column().classes('gap-0'):
-                ui.label(name).classes('small text-weight-medium')
-                ui.label('Senior Mentor').classes('tiny')
-        ui.label(topic).classes('tiny')
+                ui.label(name).classes('font-semibold')
+                ui.label('Senior Mentor').classes('text-xs text-gray-500')
+        ui.label(topic).classes('text-sm text-gray-600')
 
 def progress_card(title: str, by: str, pct: int, duration: str):
     with ui.card().classes('card shadow-soft').style('padding:16px'):
@@ -53,14 +54,15 @@ def dashboard():
     }
     body {
         font-family: 'Poppins', sans-serif;
-        background-color: var(--background);
+        background: linear-gradient(to right, #002a47, #005f98);
+        color: white;
     }
     .app {
         min-height: 100vh;
     }
     .container {
         width: 100%;
-        padding-top: 2rem;
+        padding-top: 0.5rem;
         padding-bottom: 2rem;
         padding-right: 2rem;
     }
@@ -84,6 +86,7 @@ def dashboard():
         box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
         background: white;
         padding: 2rem;
+        color: var(--dark);
     }
     .banner {
         background: linear-gradient(to right, #A29BFE, #A0C4FF);
@@ -105,30 +108,35 @@ def dashboard():
     .sidebar .q-btn {
         width: 100%;
         justify-content: flex-start;
-        padding: 0.75rem 1rem;
+        padding: 0.4rem 1rem;
         border-radius: 0.5rem;
     }
     .sidebar .q-btn:hover {
         background-color: var(--light);
     }
+    .sticky {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+    }
     ''')
-    header()
+    show_header()
     with ui.column().classes('app'):
         # Main grid
         with ui.element('main').classes('container'):
             with ui.element('div').classes('grid'):
                 # ---------- LEFT SIDEBAR ----------
-                with ui.column().classes('sidebar space-y-2'):
+                with ui.column().classes('sidebar sticky'):
                     ui.label('OVERVIEW').classes('text-xs font-bold text-gray-500 uppercase tracking-wider px-4')
                     ui.button('Home', icon='home', on_click=lambda: ui.navigate.to('/')).props('flat no-caps')
                     ui.button('Inbox', icon='mail').props('flat no-caps')
                     ui.button('Lesson', icon='menu_book', on_click=lambda: ui.open('/courses')).props('flat no-caps')
                     ui.button('Task', icon='check_circle', on_click=lambda: ui.navigate.to('/calendar')).props('flat no-caps')
                     ui.button('Group', icon='group').props('flat no-caps')
-                    ui.separator().classes('my-8')
+                    ui.separator().classes('my-4')
                     ui.label('SETTINGS').classes('text-xs font-bold text-gray-500 uppercase tracking-wider px-4')
                     ui.button('Settings', icon='settings').props('flat no-caps')
-                    ui.button('Logout', icon='logout').props('flat color=negative no-caps')
+                    ui.button('Logout', icon='logout', on_click=lambda: (clear_session(), ui.navigate.to('/login'))).props('flat color=negative no-caps')
 
                 # ---------- CENTER COLUMN ----------
                 with ui.column().classes('space-y-6 items-stretch').style('padding-left: 2rem'):
@@ -138,27 +146,28 @@ def dashboard():
                         # ui.button('Join Now', icon='arrow_forward', on_click=lambda: ui.navigate.to('/signup')).props('unelevated').classes('mt-4 bg-white text-dark')
 
                     # Your Course
-                    ui.label('Your Course').classes('text-xl font-bold text-center')
+                    ui.label('Your Course').classes('text-xl font-bold text-center text-white')
                     with ui.row().classes('w-full flex-wrap mt-4').style('gap: 1rem;'):
-                        course_chip('Physics', 'Ms. Carter', 'https://i.pravatar.cc/64?img=68')
-                        course_chip('Math', 'Mr. Stone', 'https://i.pravatar.cc/64?img=5')
-                        course_chip('ES', 'Dr. Lee', 'https://i.pravatar.cc/64?img=22')
-                        course_chip('Geo.', 'Dr. Zhang', 'https://i.pravatar.cc/64?img=33')
-                        course_chip('Chem', 'Dr. Vega', 'https://i.pravatar.cc/64?img=41')
-                        course_chip('DT', 'Mentor Addy', 'https://i.pravatar.cc/64?img=58')
+                        course_chip('Physics', 'Ms. Theodora', 'https://i.pravatar.cc/64?img=68')
+                        course_chip('Math', 'Mr. Michael', 'https://i.pravatar.cc/64?img=5')
+                        course_chip('ES', 'Dr. Marian-Rhoda', 'https://i.pravatar.cc/64?img=22')
+                        course_chip('Geo.', 'Dr. Richeal', 'https://i.pravatar.cc/64?img=33')
+                        course_chip('Chem', 'Dr. Seth', 'https://i.pravatar.cc/64?img=41')
+                        course_chip('DT', 'Mentor Diana', 'https://i.pravatar.cc/64?img=58')
 
                     # Your Mentor
                     with ui.card():
-                        with ui.row().classes('w-full items-center justify-between'):
-                            ui.label('Your Mentor').classes('text-xl font-bold')
+                        with ui.row().classes('w-full items-center'):
+                            ui.label('Your Mentors').classes('text-xl font-bold')
+                            ui.space()
                             ui.button('See all', on_click=lambda: ui.notify('Opening all mentors...')).props('flat dense color=primary')
-                        ui.separator().classes('my-4')
-                        mentor_row('Prashant Kumar Singh', 'Understanding Concept of React', 'https://i.pravatar.cc/64?img=12')
                         ui.separator().classes('my-2')
-                        mentor_row('Ravi Kumar', 'Understanding Concept of React', 'https://i.pravatar.cc/64?img=57')
+                        mentor_row('Samuel Otoo', 'Understanding Concept of React', 'https://i.pravatar.cc/64?img=12')
+                        ui.separator().classes('my-1')
+                        mentor_row('Genevieve', 'Understanding Concept of React', 'https://i.pravatar.cc/64?img=57')
 
                     # Ongoing Courses
-                    ui.label('Ongoing Courses').classes('text-xl font-bold')
+                    ui.label('Ongoing Courses').classes('text-xl font-bold text-white')
                     progress_card('Android Developer', 'Tima Mustafa', pct=81, duration='12h 36mins')
                     progress_card('Android Developer', 'Tima Mustafa', pct=37, duration='7h 20mins')
 
@@ -180,7 +189,7 @@ def dashboard():
                                     with ui.column().classes('py-2'):
                                         ui.label(title).classes('font-semibold')
                                         ui.label('By Tima Mustafa').classes('text-sm text-gray-500')
-                                event('3-Day JavaScript BootCamp')
-                                event('Flutter Workshop')
+                                event('Web Development BootCamp')
+                                event('Digital Marketing')
                                 event('2-Day GameDev BootCamp')
-                                event('GameDevelopment Competition')
+                                event('3-Day JavaScript')

@@ -1,5 +1,5 @@
 from nicegui import ui
-from components.header import header as app_header
+from components.header import show_header as app_header
 
 
 def tutor_dashboard() -> None:
@@ -16,7 +16,8 @@ def tutor_dashboard() -> None:
     }
     body {
         font-family: 'Poppins', sans-serif;
-        background-color: var(--background);
+        background: linear-gradient(to right, #002a47, #005f98);
+        color: white;
     }
     .app {
         min-height: 100vh;
@@ -54,11 +55,16 @@ def tutor_dashboard() -> None:
     .sidebar .q-btn {
         width: 100%;
         justify-content: flex-start;
-        padding: 0.75rem 1rem;
+        padding: 0.4rem 1rem;
         border-radius: 0.5rem;
     }
     .sidebar .q-btn:hover {
         background-color: var(--light);
+    }
+    .sticky {
+        position: sticky;
+        top: 0;
+        height: 100vh;
     }
     ''')
     with ui.column().classes('app'):
@@ -66,15 +72,15 @@ def tutor_dashboard() -> None:
         with ui.element('main').classes('container'):
             with ui.element('div').classes('grid'):
                 # ---------- LEFT SIDEBAR ----------
-                with ui.column().classes('sidebar flex flex-col justify-between'):
-                    with ui.column().classes('space-y-2 w-full'):
+                with ui.column().classes('sidebar sticky'):
+                    with ui.column().classes('space-y-1 w-full'):
                         ui.label('MENU').classes('text-xs font-bold text-gray-500 uppercase tracking-wider px-4 text-center')
                         ui.button('Home', icon='home', on_click=lambda: ui.navigate.to('/')).props('flat no-caps').classes('w-full justify-start')
                         ui.button('My Courses', icon='book', on_click=lambda: ui.open('/courses')).props('flat no-caps').classes('w-full justify-start')
                         ui.button('Students', icon='group').props('flat no-caps').classes('w-full justify-start')
                         ui.button('Messages', icon='mail').props('flat no-caps').classes('w-full justify-start')
-                    with ui.column().classes('space-y-2 w-full'):
-                        ui.separator().classes('my-4')
+                    with ui.column().classes('space-y-1 w-full'):
+                        ui.separator().classes('my-2')
                         ui.label('SETTINGS').classes('text-xs font-bold text-gray-500 uppercase tracking-wider px-4 text-center')
                         ui.button('Profile', icon='person').props('flat no-caps').classes('w-full justify-start')
                         ui.button('Logout', icon='logout').props('flat color=negative no-caps').classes('w-full justify-start')
@@ -84,17 +90,18 @@ def tutor_dashboard() -> None:
                     # Header
                     with ui.row().classes('w-full justify-between items-center'):
                         with ui.column():
-                            ui.label('Tutor Dashboard').classes('text-4xl font-bold text-gray-800')
-                            ui.label('Welcome back, Prof Ellen! Here’s your summary for this semester.').classes('text-lg text-gray-600')
+                            ui.label('Tutor Dashboard').classes('text-4xl font-bold text-white')
+                            ui.label('Welcome back, Prof Ellen! Here’s your summary for this semester.').classes('text-lg text-gray-300')
 
                     # Stats
                     with ui.row().classes('w-full gap-4'):
                         for label, value, icon in [('Total Students', '249', 'group'), ('Courses', '3', 'book'), ('Pending Assignments', '12', 'assignment')]:
                             with ui.card().classes('flex-1'):
-                                with ui.row().classes('items-center justify-between'):
+                                with ui.row().classes('items-center'):
                                     with ui.column():
                                         ui.label(label).classes('text-gray-500')
-                                        ui.label(value).classes('text-3xl font-bold')
+                                        ui.label(value).classes('text-3xl font-bold text-gray-800')
+                                    ui.space()
                                     ui.icon(icon, size='lg').classes('text-brand')
 
                     # My Courses & Management Tools
@@ -143,7 +150,7 @@ def tutor_dashboard() -> None:
                                         ui.label(desc).classes('font-semibold')
                                         ui.label(time).classes('text-sm text-gray-500')
                         with ui.card().classes('flex-1'):
-                            ui.label('Post a New Announcement').classes('text-2xl font-bold text-gray-800 mb-4')
-                            ui.input(placeholder='Announcement Title').classes('w-full')
-                            ui.textarea(placeholder='Write your announcement...').classes('w-full')
-                            ui.button('Post Announcement', on_click=lambda: ui.notify('Announcement Posted!')).classes('w-full mt-4 bg-brand text-white')
+                            ui.label('Create A New Course').classes('text-2xl font-bold text-gray-800 mb-4')
+                            ui.input(placeholder='Course Title').classes('w-full')
+                            ui.textarea(placeholder='Short Description...').classes('w-full')
+                            ui.button('Post Course', on_click=lambda: ui.notify('Course Created!')).classes('w-full mt-4 bg-brand text-white')
