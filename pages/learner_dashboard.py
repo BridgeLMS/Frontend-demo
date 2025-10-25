@@ -51,11 +51,11 @@ def dashboard() -> None:
     with ui.element('div').classes('grid p-8'):
         # ---------- LEFT SIDEBAR ----------
         with ui.column().classes('sidebar space-y-2'):
-            ui.button('Dashboard', icon='dashboard', on_click=lambda: ui.navigate.to('/')).props('flat no-caps')
-            ui.button('My Courses', icon='book', on_click=lambda: ui.navigate.to('/courses')).props('flat no-caps')
-            ui.button('Mailbox', icon='mail', on_click=lambda: ui.navigate.to('/mailbox')).props('flat no-caps')
-            ui.button('Calendar', icon='calendar_today', on_click=lambda: ui.navigate.to('/calendar')).props('flat no-caps')
-            ui.button('My Profile', icon='person').props('flat no-caps')
+            ui.button('Home', icon='dashboard', on_click=lambda: ui.navigate.to('/')).props('flat no-caps').classes('w-full !justify-start text-black')
+            ui.button('My Courses', icon='book', on_click=lambda: ui.navigate.to('/courses')).props('flat no-caps').classes('w-full !justify-start text-black')
+            ui.button('Mailbox', icon='mail', on_click=lambda: ui.navigate.to('/mailbox')).props('flat no-caps').classes('w-full !justify-start text-black')
+            ui.button('Calendar', icon='calendar_today', on_click=lambda: ui.navigate.to('/calendar')).props('flat no-caps').classes('w-full !justify-start text-black')
+            ui.button('My Profile', icon='person').props('flat no-caps').classes('w-full !justify-start text-black')
 
         # ---------- MAIN CONTENT ----------
         with ui.column().classes('space-y-6'):
@@ -64,9 +64,9 @@ def dashboard() -> None:
                 ui.icon('home')
                 ui.label('Home')
                 ui.icon('chevron_right')
-                ui.label('Dashboard')
+                ui.label('Learner Dashboard')
 
-            ui.label('My Dashboard').classes('text-3xl font-bold')
+            ui.label('Welcome to the Learners Dashboard').classes('text-2xl font-bold')
 
             with ui.row().classes('w-full gap-8 items-stretch'):
                 # Enrolled Courses
@@ -74,9 +74,9 @@ def dashboard() -> None:
                     ui.label('Enrolled Courses').classes('text-2xl font-bold mb-4')
                     with ui.column().classes('w-full space-y-4'):
                         courses = [
-                            ('Become a PHP Master and Make Money', 'Keny White', 75),
-                            ('Advanced Web Development', 'Jane Doe', 45),
-                            ('Data Science with Python', 'John Smith', 90),
+                            ('Become a PHP Master and Make Money', 'Proffessor Ernest Manu', 75),
+                            ('Advanced Web Development', 'Maame Jane phd', 45),
+                            ('Data Science with Python', 'Dr. Yaw Boadi', 90),
                         ]
                         for title, teacher, progress in courses:
                             with ui.column().classes('w-full'):
@@ -85,11 +85,19 @@ def dashboard() -> None:
                                     ui.label(f'{progress}%').classes('font-bold text-lg')
                                 ui.label(f'with {teacher}').classes('text-gray-500 text-sm')
                                 ui.linear_progress(value=progress/100).classes('w-full mt-2')
+                                with ui.row().classes('w-full justify-end gap-2 mt-2'):
+                                    ui.button('Continue', on_click=lambda: ui.navigate.to('/course_details')).props('flat dense')
+                                    with ui.dialog() as dialog, ui.card():
+                                        ui.label('Are you sure you want to quit this course?')
+                                        with ui.row():
+                                            ui.button('Yes', on_click=lambda: ui.notify('Course quit!'))
+                                            ui.button('No', on_click=dialog.close)
+                                    ui.button('Quit', on_click=dialog.open).props('flat dense color=negative')
                 
-                # Upcoming Assignments
-                with ui.card().classes('flex-1'):
-                    ui.label('Upcoming Assignments').classes('text-2xl font-bold mb-4')
-                    with ui.column().classes('w-full space-y-2'):
+                # Upcoming Assignments & Recent Messages
+                with ui.column().classes('w-1/3 gap-8'):
+                    with ui.card().classes('w-full'):
+                        ui.label('Upcoming Assignments').classes('text-2xl font-bold mb-4')
                         assignments = {
                             'PHP Assignment': 'Due: Oct 30',
                             'Web Dev Project': 'Due: Nov 5',
@@ -99,9 +107,19 @@ def dashboard() -> None:
                             with ui.row().classes('w-full justify-between'):
                                 ui.label(name)
                                 ui.label(due_date).classes('text-gray-500')
+                    with ui.card().classes('w-full'):
+                        ui.label('Recent Messages').classes('text-2xl font-bold mb-4')
+                        messages = [
+                            ('From: Gifty Eshun', 'Re: PHP Assignment'),
+                            ('From: Micheal Luminous', 'Re: Web Dev Project'),
+                        ]
+                        for sender, subject in messages:
+                            with ui.column().classes('w-full'):
+                                ui.label(sender).classes('font-bold')
+                                ui.label(subject).classes('text-gray-500')
 
                 # Mark Attendance
-                with ui.card().classes('flex-1'):
+                with ui.card().classes('w-1/3'):
                     ui.label('Mark Attendance').classes('text-2xl font-bold mb-4')
                     ui.select(['Present', 'Absent', 'Late'], label='Status').classes('w-full')
                     ui.textarea(label='Daily Summary').classes('w-full')

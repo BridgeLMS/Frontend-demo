@@ -12,6 +12,7 @@ from pages.signup import signup
 from pages.create_course import create_course_page
 from pages.mailbox import mailbox_page
 from pages.calendar import calendar_page
+from pages.course_details import course_details_page
 # aboutfrom pages.about import about
 
 # Force reload
@@ -109,6 +110,14 @@ def calendar():
     """Calendar page layout."""
     main_layout()
     calendar_page()
+    show_footer()
+
+
+@ui.page('/course_details')
+def course_details():
+    """Course details page layout."""
+    main_layout()
+    course_details_page()
     show_footer()
 
 
