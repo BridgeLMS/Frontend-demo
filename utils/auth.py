@@ -96,10 +96,9 @@ def api_signup(username: str, email: str, password: str, role: str, phone: str, 
             user_id = (data.get('user') or {}).get('id') or data.get('user_id')
             return True, 'Account successfully created', token, user_id
         else:
-            return _local_signup(username, email, password, role, phone, bio)
-    except Exception:
-        # Fallback to local mock
-        return _local_signup(username, email, password, role, phone, bio)
+            return False, r.json().get('message', 'Signup failed'), None, None
+    except Exception as e:
+        return False, f"An error occurred: {e}", None, None
 
 
 def _local_signup(username: str, email: str, password: str, role: str, phone: str, bio: str) -> Tuple[bool, str, Optional[str], Optional[str]]:
@@ -131,9 +130,9 @@ def api_login(email: str, password: str) -> Tuple[bool, str, Optional[str], Opti
             username = user.get('username') or data.get('username')
             return True, 'Login successful', token, user_id, role, username
         else:
-            return _local_login(email, password)
-    except Exception:
-        return _local_login(email, password)
+            return False, r.json().get('message', 'Login failed'), None, None, None, None
+    except Exception as e:
+        return False, f"An error occurred: {e}", None, None, None, None
 
 
 def _local_login(email: str, password: str) -> Tuple[bool, str, Optional[str], Optional[str], Optional[str], Optional[str]]:
@@ -276,4 +275,3 @@ def _local_login(email: str, password: str) -> Tuple[bool, str, Optional[str], O
 #     except Exception as e:
 #         # Fallback to local mock system if remote API fails
 #         return _local_login(email, password)
-

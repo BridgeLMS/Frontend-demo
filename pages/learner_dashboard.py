@@ -4,6 +4,7 @@
 from nicegui import ui
 from components.header import show_header
 from utils.auth import clear_session
+from components.footer import show_footer
 
 # ---------- Helpers ----------
 def toggle_theme():
@@ -193,3 +194,4 @@ def dashboard():
                                 event('Digital Marketing')
                                 event('2-Day GameDev BootCamp')
                                 event('3-Day JavaScript')
+        show_footer()
