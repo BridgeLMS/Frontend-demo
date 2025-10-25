@@ -1,49 +1,11 @@
-# learner_dashboard_nicegui.py
-# pip install nicegui==1.*
-
 from nicegui import ui
-from components.header import show_header
-from utils.auth import clear_session
+from components.header import show_header as app_header
 from components.footer import show_footer
 
-# ---------- Helpers ----------
-def toggle_theme():
-    ui.dark_mode().toggle()
-
-def course_chip(title: str, teacher: str, avatar_url: str):
-    with ui.card().classes('card shadow-soft chip items-center').style('flex: 1 1 calc(50% - 0.5rem);'):
-        ui.image(avatar_url).classes('rounded-borders').style('width:36px;height:36px;object-fit:cover')
-        with ui.column().classes('gap-0 flex-grow'):
-            ui.label(title).classes('text-weight-medium')
-            ui.label(teacher).classes('tiny')
-
-def mentor_row(name: str, topic: str, avatar_url: str):
-    with ui.row().classes('w-full items-center justify-between'):
-        with ui.row().classes('items-center gap-4'):
-            ui.image(avatar_url).classes('w-10 h-10 rounded-full object-cover')
-            with ui.column().classes('gap-0'):
-                ui.label(name).classes('font-semibold')
-                ui.label('Senior Mentor').classes('text-xs text-gray-500')
-        ui.label(topic).classes('text-sm text-gray-600')
-
-def progress_card(title: str, by: str, pct: int, duration: str):
-    with ui.card().classes('card shadow-soft').style('padding:16px'):
-        with ui.row().classes('w-full items-center justify-between'):
-            with ui.column().classes('gap-0'):
-                ui.label(title).classes('small text-weight-medium')
-                ui.label(f'By {by} • Duration {duration}').classes('tiny')
-            ui.button('Continue', color='primary', on_click=lambda: ui.open('/courses')).props('unelevated size=sm')
-
-        ui.linear_progress(value=pct/100).classes('q-mt-md').props('rounded color=primary')
-
-def right_card(title: str):
-    with ui.card().classes('card shadow-soft').style('padding:16px'):
-        ui.label(title).classes('text-weight-medium small')
-        return ui.column().classes('q-mt-sm')
-
-# ---------- App ----------
-def dashboard():
-    # ---------- Minimal CSS (no Tailwind) ----------
+def dashboard() -> None:
+    """Create the learner dashboard page."""
+    app_header()
+    ui.add_head_html('<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">')
     ui.add_css('''
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
     :root {
@@ -55,143 +17,94 @@ def dashboard():
     }
     body {
         font-family: 'Poppins', sans-serif;
-        background: linear-gradient(to right, #002a47, #005f98);
-        color: white;
-    }
-    .app {
-        min-height: 100vh;
-    }
-    .container {
-        width: 100%;
-        padding-top: 0.5rem;
-        padding-bottom: 2rem;
-        padding-right: 2rem;
+        background-color: var(--background);
+        color: var(--dark);
     }
     .grid {
         display: grid;
         gap: 1.5rem;
-        grid-template-columns: 1fr;
+        grid-template-columns: 240px 1fr;
     }
-    @media (min-width: 768px) {
-        .grid {
-            grid-template-columns: 240px 1fr;
-        }
+    .sidebar .q-btn {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border-radius: 0.5rem;
+        font-weight: 500;
     }
-    @media (min-width: 1024px) {
-        .grid {
-            grid-template-columns: 240px 1fr;
-        }
+    .sidebar .q-btn .q-btn__content {
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: flex-start !important;
+        align-items: center !important;
+        gap: 1rem !important;
+    }
+    .sidebar .q-btn:hover {
+        background-color: var(--light);
     }
     .card {
         border-radius: 1rem;
         box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
         background: white;
         padding: 2rem;
-        color: var(--dark);
-    }
-    .banner {
-        background: linear-gradient(to right, #A29BFE, #A0C4FF);
-        color: white;
-        border-radius: 1rem;
-        padding: 1.5rem;
-        position: relative;
-        overflow: hidden;
-        border: none;
-    }
-    .topbar {
-        position: sticky;
-        top: 0;
-        z-index: 10;
-        background: rgba(255, 255, 255, 0.8);
-        backdrop-filter: blur(10px);
-        border-bottom: 1px solid var(--light);
-    }
-    .sidebar .q-btn {
-        width: 100%;
-        justify-content: flex-start;
-        padding: 0.4rem 1rem;
-        border-radius: 0.5rem;
-    }
-    .sidebar .q-btn:hover {
-        background-color: var(--light);
-    }
-    .sticky {
-        position: sticky;
-        top: 0;
-        height: 100vh;
     }
     ''')
-    show_header()
-    with ui.column().classes('app'):
-        # Main grid
-        with ui.element('main').classes('container'):
-            with ui.element('div').classes('grid'):
-                # ---------- LEFT SIDEBAR ----------
-                with ui.column().classes('sidebar sticky'):
-                    ui.label('OVERVIEW').classes('text-xs font-bold text-gray-500 uppercase tracking-wider px-4')
-                    ui.button('Home', icon='home', on_click=lambda: ui.navigate.to('/')).props('flat no-caps')
-                    ui.button('Inbox', icon='mail').props('flat no-caps')
-                    ui.button('Lesson', icon='menu_book', on_click=lambda: ui.open('/courses')).props('flat no-caps')
-                    ui.button('Task', icon='check_circle', on_click=lambda: ui.navigate.to('/calendar')).props('flat no-caps')
-                    ui.button('Group', icon='group').props('flat no-caps')
-                    ui.separator().classes('my-4')
-                    ui.label('SETTINGS').classes('text-xs font-bold text-gray-500 uppercase tracking-wider px-4')
-                    ui.button('Settings', icon='settings').props('flat no-caps')
-                    ui.button('Logout', icon='logout', on_click=lambda: (clear_session(), ui.navigate.to('/login'))).props('flat color=negative no-caps')
+    with ui.element('div').classes('grid p-8'):
+        # ---------- LEFT SIDEBAR ----------
+        with ui.column().classes('sidebar space-y-2'):
+            ui.button('Dashboard', icon='dashboard', on_click=lambda: ui.navigate.to('/')).props('flat no-caps')
+            ui.button('My Courses', icon='book', on_click=lambda: ui.navigate.to('/courses')).props('flat no-caps')
+            ui.button('Mailbox', icon='mail', on_click=lambda: ui.navigate.to('/mailbox')).props('flat no-caps')
+            ui.button('Calendar', icon='calendar_today', on_click=lambda: ui.navigate.to('/calendar')).props('flat no-caps')
+            ui.button('My Profile', icon='person').props('flat no-caps')
 
-                # ---------- CENTER COLUMN ----------
-                with ui.column().classes('space-y-6 items-stretch').style('padding-left: 2rem'):
-                    # Banner
-                    with ui.element('div').classes('banner').style('margin-top: 2rem;'):
-                        ui.label('Learn at your own pace, anytime, anywhere.').classes('text-3xl font-bold')
-                        # ui.button('Join Now', icon='arrow_forward', on_click=lambda: ui.navigate.to('/signup')).props('unelevated').classes('mt-4 bg-white text-dark')
+        # ---------- MAIN CONTENT ----------
+        with ui.column().classes('space-y-6'):
+            # Breadcrumb
+            with ui.row().classes('items-center text-gray-500'):
+                ui.icon('home')
+                ui.label('Home')
+                ui.icon('chevron_right')
+                ui.label('Dashboard')
 
-                    # Your Course
-                    ui.label('Your Course').classes('text-xl font-bold text-center text-white')
-                    with ui.row().classes('w-full flex-wrap mt-4').style('gap: 1rem;'):
-                        course_chip('Physics', 'Ms. Theodora', 'https://i.pravatar.cc/64?img=68')
-                        course_chip('Math', 'Mr. Michael', 'https://i.pravatar.cc/64?img=5')
-                        course_chip('ES', 'Dr. Marian-Rhoda', 'https://i.pravatar.cc/64?img=22')
-                        course_chip('Geo.', 'Dr. Richeal', 'https://i.pravatar.cc/64?img=33')
-                        course_chip('Chem', 'Dr. Seth', 'https://i.pravatar.cc/64?img=41')
-                        course_chip('DT', 'Mentor Diana', 'https://i.pravatar.cc/64?img=58')
+            ui.label('My Dashboard').classes('text-3xl font-bold')
 
-                    # Your Mentor
-                    with ui.card():
-                        with ui.row().classes('w-full items-center'):
-                            ui.label('Your Mentors').classes('text-xl font-bold')
-                            ui.space()
-                            ui.button('See all', on_click=lambda: ui.notify('Opening all mentors...')).props('flat dense color=primary')
-                        ui.separator().classes('my-2')
-                        mentor_row('Samuel Otoo', 'Understanding Concept of React', 'https://i.pravatar.cc/64?img=12')
-                        ui.separator().classes('my-1')
-                        mentor_row('Genevieve', 'Understanding Concept of React', 'https://i.pravatar.cc/64?img=57')
+            with ui.row().classes('w-full gap-8 items-stretch'):
+                # Enrolled Courses
+                with ui.card().classes('flex-1'):
+                    ui.label('Enrolled Courses').classes('text-2xl font-bold mb-4')
+                    with ui.column().classes('w-full space-y-4'):
+                        courses = [
+                            ('Become a PHP Master and Make Money', 'Keny White', 75),
+                            ('Advanced Web Development', 'Jane Doe', 45),
+                            ('Data Science with Python', 'John Smith', 90),
+                        ]
+                        for title, teacher, progress in courses:
+                            with ui.column().classes('w-full'):
+                                with ui.row().classes('w-full justify-between items-center'):
+                                    ui.label(title).classes('font-bold')
+                                    ui.label(f'{progress}%').classes('font-bold text-lg')
+                                ui.label(f'with {teacher}').classes('text-gray-500 text-sm')
+                                ui.linear_progress(value=progress/100).classes('w-full mt-2')
+                
+                # Upcoming Assignments
+                with ui.card().classes('flex-1'):
+                    ui.label('Upcoming Assignments').classes('text-2xl font-bold mb-4')
+                    with ui.column().classes('w-full space-y-2'):
+                        assignments = {
+                            'PHP Assignment': 'Due: Oct 30',
+                            'Web Dev Project': 'Due: Nov 5',
+                            'Data Analysis Report': 'Due: Nov 12',
+                        }
+                        for name, due_date in assignments.items():
+                            with ui.row().classes('w-full justify-between'):
+                                ui.label(name)
+                                ui.label(due_date).classes('text-gray-500')
 
-                    # Ongoing Courses
-                    ui.label('Ongoing Courses').classes('text-xl font-bold text-white')
-                    progress_card('Android Developer', 'Tima Mustafa', pct=81, duration='12h 36mins')
-                    progress_card('Android Developer', 'Tima Mustafa', pct=37, duration='7h 20mins')
-
-                    # Today timeline & Upcoming Events
-                    with ui.row().classes('w-full no-wrap items-stretch').style('gap: 1rem;'):
-                        with ui.card().classes('w-1/2 h-full flex flex-col'):
-                            ui.label('Today').classes('text-xl font-bold')
-                            with ui.column().classes('flex-grow justify-around'):
-                                for t in ['06:30 pm','07:00 pm','07:30 pm','08:00 pm','08:30 pm','09:00 pm','09:30 pm']:
-                                    with ui.row().classes('items-center justify-between w-full'):
-                                        ui.label(t).classes('text-sm text-gray-500')
-                                        ui.separator().props('vertical').classes('mx-2')
-                                        ui.label('•').classes('text-xs text-gray-400')
-
-                        with ui.card().classes('w-1/2 h-full flex flex-col'):
-                            ui.label('Upcoming Events').classes('text-xl font-bold')
-                            with ui.column().classes('flex-grow justify-around'):
-                                def event(title: str):
-                                    with ui.column().classes('py-2'):
-                                        ui.label(title).classes('font-semibold')
-                                        ui.label('By Tima Mustafa').classes('text-sm text-gray-500')
-                                event('Web Development BootCamp')
-                                event('Digital Marketing')
-                                event('2-Day GameDev BootCamp')
-                                event('3-Day JavaScript')
-        show_footer()
+                # Mark Attendance
+                with ui.card().classes('flex-1'):
+                    ui.label('Mark Attendance').classes('text-2xl font-bold mb-4')
+                    ui.select(['Present', 'Absent', 'Late'], label='Status').classes('w-full')
+                    ui.textarea(label='Daily Summary').classes('w-full')
+                    ui.upload(label='Upload Media', auto_upload=True, on_upload=lambda e: ui.notify(f'Uploaded {e.name}')).classes('w-full mt-4')
+                    ui.button('Submit', on_click=lambda: ui.notify('Attendance marked!')).classes('w-full mt-4 bg-blue-500 text-white')
+    show_footer()

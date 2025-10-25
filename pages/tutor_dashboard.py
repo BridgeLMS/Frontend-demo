@@ -6,6 +6,7 @@ from components.footer import show_footer
 def tutor_dashboard() -> None:
     """Create the tutor dashboard page."""
     app_header()
+    ui.add_head_html('<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">')
     ui.add_css('''
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
     :root {
@@ -17,27 +18,29 @@ def tutor_dashboard() -> None:
     }
     body {
         font-family: 'Poppins', sans-serif;
-        background: linear-gradient(to right, #002a47, #005f98);
-        color: white;
-    }
-    .app {
-        min-height: 100vh;
-    }
-    .container {
-        width: 100%;
-        padding-top: 2rem;
-        padding-bottom: 2rem;
-        padding-right: 2rem;
+        background-color: var(--background);
+        color: var(--dark);
     }
     .grid {
         display: grid;
         gap: 1.5rem;
-        grid-template-columns: 1fr;
+        grid-template-columns: 240px 1fr;
     }
-    @media (min-width: 768px) {
-        .grid {
-            grid-template-columns: 240px 1fr;
-        }
+    .sidebar .q-btn {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border-radius: 0.5rem;
+        font-weight: 500;
+    }
+    .sidebar .q-btn .q-btn__content {
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: flex-start !important;
+        align-items: center !important;
+        gap: 1rem !important;
+    }
+    .sidebar .q-btn:hover {
+        background-color: var(--light);
     }
     .card {
         border-radius: 1rem;
@@ -45,114 +48,207 @@ def tutor_dashboard() -> None:
         background: white;
         padding: 2rem;
     }
-    .topbar {
-        position: sticky;
-        top: 0;
-        z-index: 10;
-        background: rgba(255, 255, 255, 0.8);
-        backdrop-filter: blur(10px);
-        border-bottom: 1px solid var(--light);
-    }
-    .sidebar .q-btn {
-        width: 100%;
-        justify-content: flex-start;
-        padding: 0.4rem 1rem;
-        border-radius: 0.5rem;
-    }
-    .sidebar .q-btn:hover {
-        background-color: var(--light);
-    }
-    .sticky {
-        position: sticky;
-        top: 0;
-        height: 100vh;
-    }
     ''')
-    with ui.column().classes('app'):
-        # Main grid
-        with ui.element('main').classes('container'):
-            with ui.element('div').classes('grid'):
-                # ---------- LEFT SIDEBAR ----------
-                with ui.column().classes('sidebar sticky'):
-                    with ui.column().classes('space-y-1 w-full'):
-                        ui.label('MENU').classes('text-xs font-bold text-gray-500 uppercase tracking-wider px-4 text-center')
-                        ui.button('Home', icon='home', on_click=lambda: ui.navigate.to('/')).props('flat no-caps').classes('w-full justify-start')
-                        ui.button('My Courses', icon='book', on_click=lambda: ui.open('/courses')).props('flat no-caps').classes('w-full justify-start')
-                        ui.button('Students', icon='group').props('flat no-caps').classes('w-full justify-start')
-                        ui.button('Messages', icon='mail').props('flat no-caps').classes('w-full justify-start')
-                    with ui.column().classes('space-y-1 w-full'):
-                        ui.separator().classes('my-2')
-                        ui.label('SETTINGS').classes('text-xs font-bold text-gray-500 uppercase tracking-wider px-4 text-center')
-                        ui.button('Profile', icon='person').props('flat no-caps').classes('w-full justify-start')
-                        ui.button('Logout', icon='logout').props('flat color=negative no-caps').classes('w-full justify-start')
+    with ui.element('div').classes('grid p-8'):
+        # ---------- LEFT SIDEBAR ----------
+        with ui.column().classes('sidebar space-y-2'):
+            ui.button('Dashboard', icon='dashboard', on_click=lambda: ui.navigate.to('/')).props('flat no-caps')
+            ui.button('Courses', icon='book', on_click=lambda: ui.navigate.to('/create_course')).props('flat no-caps')
+            ui.button('Mailbox', icon='mail', on_click=lambda: ui.navigate.to('/mailbox')).props('flat no-caps')
+            ui.button('Calendar', icon='calendar_today', on_click=lambda: ui.navigate.to('/calendar')).props('flat no-caps')
+            # ui.button('Bookmarks', icon='bookmark').props('flat no-caps')
+            # ui.button('Review', icon='reviews').props('flat no-caps')
+            # ui.button('Add Listing', icon='add').props('flat no-caps')
+            ui.button('My Profile', icon='person').props('flat no-caps')
 
-                # ---------- CENTER COLUMN ----------
-                with ui.column().classes('space-y-6').style('padding-left: 2rem'):
-                    # Header
-                    with ui.row().classes('w-full justify-between items-center'):
-                        with ui.column():
-                            ui.label('Tutor Dashboard').classes('text-4xl font-bold text-white')
-                            ui.label('Welcome back, Prof Ellen! Here’s your summary for this semester.').classes('text-lg text-gray-300')
+        # ---------- MAIN CONTENT ----------
+        with ui.column().classes('space-y-6'):
+            # Breadcrumb
+            with ui.row().classes('items-center text-gray-500'):
+                ui.icon('home')
+                ui.label('Home')
+                ui.icon('chevron_right')
+                ui.label('Courses')
 
-                    # Stats
-                    with ui.row().classes('w-full gap-4'):
-                        for label, value, icon in [('Total Students', '249', 'group'), ('Courses', '3', 'book'), ('Pending Assignments', '12', 'assignment')]:
-                            with ui.card().classes('flex-1'):
-                                with ui.row().classes('items-center'):
-                                    with ui.column():
-                                        ui.label(label).classes('text-gray-500')
-                                        ui.label(value).classes('text-3xl font-bold text-gray-800')
-                                    ui.space()
-                                    ui.icon(icon, size='lg').classes('text-brand')
+            ui.label('Your Courses').classes('text-3xl font-bold')
 
-                    # My Courses & Management Tools
-                    with ui.row().classes('w-full gap-6 items-stretch'):
-                        with ui.card().classes('flex-1'):
-                            ui.label('My Courses').classes('text-2xl font-bold text-gray-800 mb-4')
-                            with ui.column().classes('w-full space-y-4'):
-                                courses = [
-                                    ('Digital Marketing Fundamentals', '124 Students', 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=80'),
-                                    ('Advanced Spanish', '88 Students', 'https://images.unsplash.com/photo-1524678606370-a47625cb810c?auto=format&fit=crop&w=800&q=80'),
-                                    ('Creative Writing Workshop', '95 Students', 'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=800&q=80'),
-                                ]
-                                for title, students, image_url in courses:
-                                    with ui.row().classes('w-full items-center gap-4'):
-                                        ui.image(image_url).classes('w-24 h-16 rounded-lg object-cover')
-                                        with ui.column().classes('flex-1'):
-                                            ui.label(title).classes('font-bold')
-                                            ui.label(students).classes('text-gray-500 text-sm')
-                                        ui.button('Manage', icon='arrow_forward').props('flat round')
-                        with ui.card().classes('flex-1'):
-                            ui.label('Management Tools').classes('text-2xl font-bold text-gray-800 mb-4')
-                            with ui.column().classes('w-full space-y-4'):
-                                tools = [
-                                    ('book', 'Manage Resources', 'Upload and organize course materials.'),
-                                    ('campaign', 'Post Announcements', 'Share updates with your students.'),
-                                    ('checklist', 'Track Attendance', 'Monitor student attendance and engagement.'),
-                                ]
-                                for icon, name, desc in tools:
-                                    with ui.row().classes('items-center gap-4'):
-                                        ui.icon(icon, size='md').classes('text-brand')
-                                        with ui.column():
-                                            ui.label(name).classes('font-bold')
-                                            ui.label(desc).classes('text-gray-500 text-sm')
-                    # Recent Activity & Announcements Section
-                    with ui.row().classes('w-full gap-6 items-stretch'):
-                        with ui.card().classes('flex-1'):
-                            ui.label('Recent Activity').classes('text-2xl font-bold text-gray-800 mb-4')
-                            with ui.column().classes('w-full space-y-4'):
-                                activities = [
-                                    ('Sophia Carter submitted a new assignment.', '2 hours ago'),
-                                    ('You posted a new announcement.', '1 day ago'),
-                                    ('New student enrolled in your course.', '3 days ago'),
-                                ]
-                                for desc, time in activities:
-                                    with ui.column():
-                                        ui.label(desc).classes('font-semibold')
-                                        ui.label(time).classes('text-sm text-gray-500')
-                        with ui.card().classes('flex-1'):
-                            ui.label('Create A New Course').classes('text-2xl font-bold text-gray-800 mb-4')
-                            ui.input(placeholder='Course Title').classes('w-full')
-                            ui.textarea(placeholder='Short Description...').classes('w-full')
-                            ui.button('Post Course', on_click=lambda: ui.notify('Course Created!')).classes('w-full mt-4 bg-brand text-white')
-        show_footer()
+            # Course Card
+            with ui.card().classes('w-full'):
+                with ui.row().classes('w-full no-wrap items-start gap-8'):
+                    # Image
+                    ui.image('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80').classes('w-[300px] rounded-lg object-cover')
+                    
+                    # Content
+                    with ui.column().classes('flex-grow'):
+                        # Top row: Title, Price
+                        with ui.row().classes('w-full justify-between items-start'):
+                            ui.label('Become a PHP Master and Make Money').classes('text-2xl font-bold')
+                            with ui.column().classes('items-end gap-0'):
+                                ui.label('₵199').classes('text-md text-gray-400 line-through')
+                                ui.label('₵120').classes('text-2xl font-bold text-gray-800')
+
+                        # Middle row: Details
+                        with ui.row().classes('items-center gap-4 mt-2'):
+                            ui.image('https://randomuser.me/api/portraits/men/1.jpg').classes('w-8 h-8 rounded-full')
+                            with ui.column().classes('gap-0'):
+                                ui.label('Teacher').classes('text-xs text-gray-500')
+                                ui.label('KENY WHITE').classes('text-sm font-bold')
+                            
+                            with ui.column().classes('gap-0 ml-4'):
+                                ui.label('3 Categories').classes('text-xs text-gray-500')
+                                ui.label('BACKEND').classes('text-sm font-bold')
+
+                            with ui.column().classes('gap-0 ml-4'):
+                                ui.label('3 Review').classes('text-xs text-gray-500')
+                                with ui.row().classes('items-center gap-0'):
+                                    ui.icon('star', size='sm', color='amber')
+                                    ui.icon('star', size='sm', color='amber')
+                                    ui.icon('star', size='sm', color='amber')
+                                    ui.icon('star_border', size='sm', color='amber')
+                                    ui.icon('star_border', size='sm', color='amber')
+                            
+                            ui.chip('Pending', color='teal').classes('text-white ml-4')
+
+                        # Bottom part: Description and Buttons
+                        ui.label('Course Description').classes('text-lg font-bold mt-6 mb-2')
+                        ui.label('Lorem ipsum dolor sit amet, est ei idque voluptua copiosae, pro detracto disputando reformidans at, ex vel suas eripuit. Vel alii zril maiorum ex, mea id sale eirmod epicurei. Sit te possit senserit, eam alia veritus maluisset ei, id cibo vocent ocurreret per. Te qui doming doctus referrentur, usu debet tamquam et. Sea ut nullam aperiam, mei cu tollit salutatus delicatissimi.').classes('text-sm text-gray-600')
+
+                        with ui.row().classes('w-full gap-4 mt-8'):
+                            ui.button('Approve', color='teal').props('outline rounded').classes('border-2')
+                            ui.button('Cancel', color='red').props('outline rounded').classes('border-2')
+
+            # Course Card 2
+            with ui.card().classes('w-full'):
+                with ui.row().classes('w-full no-wrap items-start gap-8'):
+                    # Image
+                    ui.image('https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=800&q=80').classes('w-[300px] rounded-lg object-cover')
+                    
+                    # Content
+                    with ui.column().classes('flex-grow'):
+                        # Top row: Title, Price
+                        with ui.row().classes('w-full justify-between items-start'):
+                            ui.label('Advanced Web Development').classes('text-2xl font-bold')
+                            with ui.column().classes('items-end gap-0'):
+                                ui.label('₵250').classes('text-md text-gray-400 line-through')
+                                ui.label('₵180').classes('text-2xl font-bold text-gray-800')
+
+                        # Middle row: Details
+                        with ui.row().classes('items-center gap-4 mt-2'):
+                            ui.image('https://randomuser.me/api/portraits/women/2.jpg').classes('w-8 h-8 rounded-full')
+                            with ui.column().classes('gap-0'):
+                                ui.label('Teacher').classes('text-xs text-gray-500')
+                                ui.label('JANE DOE').classes('text-sm font-bold')
+                            
+                            with ui.column().classes('gap-0 ml-4'):
+                                ui.label('4 Categories').classes('text-xs text-gray-500')
+                                ui.label('FRONTEND').classes('text-sm font-bold')
+
+                            with ui.column().classes('gap-0 ml-4'):
+                                ui.label('5 Review').classes('text-xs text-gray-500')
+                                with ui.row().classes('items-center gap-0'):
+                                    ui.icon('star', size='sm', color='amber')
+                                    ui.icon('star', size='sm', color='amber')
+                                    ui.icon('star', size='sm', color='amber')
+                                    ui.icon('star', size='sm', color='amber')
+                                    ui.icon('star_half', size='sm', color='amber')
+                            
+                            ui.chip('Approved', color='green').classes('text-white ml-4')
+
+                        # Bottom part: Description and Buttons
+                        ui.label('Course Description').classes('text-lg font-bold mt-6 mb-2')
+                        ui.label('Dive deep into modern web development with React, Node.js, and more. Build complex applications and master the full stack.').classes('text-sm text-gray-600')
+
+                        with ui.row().classes('w-full gap-4 mt-8'):
+                            ui.button('View', color='blue').props('outline rounded').classes('border-2')
+                            ui.button('Delete', color='red').props('outline rounded').classes('border-2')
+
+            # Course Card 3
+            with ui.card().classes('w-full'):
+                with ui.row().classes('w-full no-wrap items-start gap-8'):
+                    # Image
+                    ui.image('https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80').classes('w-[300px] rounded-lg object-cover')
+                    
+                    # Content
+                    with ui.column().classes('flex-grow'):
+                        # Top row: Title, Price
+                        with ui.row().classes('w-full justify-between items-start'):
+                            ui.label('Data Science with Python').classes('text-2xl font-bold')
+                            with ui.column().classes('items-end gap-0'):
+                                ui.label('₵300').classes('text-md text-gray-400 line-through')
+                                ui.label('₵220').classes('text-2xl font-bold text-gray-800')
+
+                        # Middle row: Details
+                        with ui.row().classes('items-center gap-4 mt-2'):
+                            ui.image('https://randomuser.me/api/portraits/men/3.jpg').classes('w-8 h-8 rounded-full')
+                            with ui.column().classes('gap-0'):
+                                ui.label('Teacher').classes('text-xs text-gray-500')
+                                ui.label('JOHN SMITH').classes('text-sm font-bold')
+                            
+                            with ui.column().classes('gap-0 ml-4'):
+                                ui.label('2 Categories').classes('text-xs text-gray-500')
+                                ui.label('DATA SCIENCE').classes('text-sm font-bold')
+
+                            with ui.column().classes('gap-0 ml-4'):
+                                ui.label('4 Review').classes('text-xs text-gray-500')
+                                with ui.row().classes('items-center gap-0'):
+                                    ui.icon('star', size='sm', color='amber')
+                                    ui.icon('star', size='sm', color='amber')
+                                    ui.icon('star', size='sm', color='amber')
+                                    ui.icon('star', size='sm', color='amber')
+                                    ui.icon('star_border', size='sm', color='amber')
+                            
+                            ui.chip('Pending', color='teal').classes('text-white ml-4')
+
+                        # Bottom part: Description and Buttons
+                        ui.label('Course Description').classes('text-lg font-bold mt-6 mb-2')
+                        ui.label('Learn to analyze data, create beautiful visualizations, and use machine learning with Python, Pandas, and Scikit-learn.').classes('text-sm text-gray-600')
+
+                        with ui.row().classes('w-full gap-4 mt-8'):
+                            ui.button('Approve', color='teal').props('outline rounded').classes('border-2')
+                            ui.button('Cancel', color='red').props('outline rounded').classes('border-2')
+
+            # Course Card 4
+            with ui.card().classes('w-full'):
+                with ui.row().classes('w-full no-wrap items-start gap-8'):
+                    # Image
+                    ui.image('https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=800&q=80').classes('w-[300px] rounded-lg object-cover')
+                    
+                    # Content
+                    with ui.column().classes('flex-grow'):
+                        # Top row: Title, Price
+                        with ui.row().classes('w-full justify-between items-start'):
+                            ui.label('Digital Marketing Masterclass').classes('text-2xl font-bold')
+                            with ui.column().classes('items-end gap-0'):
+                                ui.label('₵180').classes('text-md text-gray-400 line-through')
+                                ui.label('₵150').classes('text-2xl font-bold text-gray-800')
+
+                        # Middle row: Details
+                        with ui.row().classes('items-center gap-4 mt-2'):
+                            ui.image('https://randomuser.me/api/portraits/women/4.jpg').classes('w-8 h-8 rounded-full')
+                            with ui.column().classes('gap-0'):
+                                ui.label('Teacher').classes('text-xs text-gray-500')
+                                ui.label('EMILY ROSE').classes('text-sm font-bold')
+                            
+                            with ui.column().classes('gap-0 ml-4'):
+                                ui.label('5 Categories').classes('text-xs text-gray-500')
+                                ui.label('MARKETING').classes('text-sm font-bold')
+
+                            with ui.column().classes('gap-0 ml-4'):
+                                ui.label('5 Review').classes('text-xs text-gray-500')
+                                with ui.row().classes('items-center gap-0'):
+                                    ui.icon('star', size='sm', color='amber')
+                                    ui.icon('star', size='sm', color='amber')
+                                    ui.icon('star', size='sm', color='amber')
+                                    ui.icon('star', size='sm', color='amber')
+                                    ui.icon('star', size='sm', color='amber')
+                            
+                            ui.chip('Approved', color='green').classes('text-white ml-4')
+
+                        # Bottom part: Description and Buttons
+                        ui.label('Course Description').classes('text-lg font-bold mt-6 mb-2')
+                        ui.label('Master SEO, content marketing, social media, and more to grow any business online.').classes('text-sm text-gray-600')
+
+                        with ui.row().classes('w-full gap-4 mt-8'):
+                            ui.button('View', color='blue').props('outline rounded').classes('border-2')
+                            ui.button('Delete', color='red').props('outline rounded').classes('border-2')
+    show_footer()
